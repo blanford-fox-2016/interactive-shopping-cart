@@ -4,6 +4,7 @@ const controller = require('../controller/controller')
 /* GET item listing. */
 router.get('/item', controller.viewItems)
 router.post('/item', controller.addItem)
+router.get('/item/:id', controller.findEditItem)
 router.put('/item/:id', controller.editItem)
 router.delete('/item/:id', controller.removeItem)
 

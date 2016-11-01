@@ -6,6 +6,7 @@ const cart = require('../models/cart');
 module.exports = {
     viewItems: function(req, res, next) {
         item.find({}, (err, data) => {
+            console.log(data);
             if (err) {
                 res.json(err)
             } else {
@@ -28,7 +29,20 @@ module.exports = {
             }
         })
     },
+    findEditItem: function(req, res, next) {
+        console.log(req.params.id);
+        item.find({
+            _id: req.params.id
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
     editItem: function(req, res, next) {
+        console.log(req.body);
         item.update({
             _id: req.params.id
         }, {
@@ -46,6 +60,7 @@ module.exports = {
         })
     },
     removeItem: function(req, res, next) {
+        console.log(req.params.id);
         item.remove({
             _id: req.params.id
         }, (err, data) => {
