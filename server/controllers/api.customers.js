@@ -37,13 +37,20 @@ let editCustomer = (req, res, next) => {
   Customers.update({
     _id : req.params.id
   }, req.body,
-  (err, edited_Customer) => {
+  (err, status) => {
     if(err){
       console.log(err)
       res.send(err)
     }else{
-      console.log(`${edited_Customer} has been edited`)
-      res.json(edited_Customer)
+      Customers.findById(req.params.id, (err, edited_item) => {
+        if(err){
+          console.log(err)
+          res.send(err)
+        }else{
+          console.log(`${edited_Customer} has been edited`)
+          res.json(edited_Customer)
+        }
+      })
     }
   })
 }
