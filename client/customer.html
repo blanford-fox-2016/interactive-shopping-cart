@@ -14,7 +14,7 @@
 
     <h1 class="text-center">Customer</h1>
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="createCustomerForm">
         <div class="form-group">
             <label class="control-label col-sm-2">Name:</label>
             <div class="col-sm-10">
@@ -54,7 +54,7 @@
 </div>
 
 <div class="container">
-    <table class="table">
+    <table class="table" id="rowOfCustomers">
         <tr>
             <td>No.</td>
             <td>Name</td>
@@ -62,16 +62,139 @@
             <td>Address</td>
             <td>ZIP</td>
             <td>Phone</td>
+            <td>Action</td>
         </tr>
 
-        <tr>
-            <td></td>
-        </tr>
     </table>
 </div>
 
 <script src="javascripts/jquery-3.1.1.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
+
+<script>
+    $( document ).ready(function() {
+        var rowOfCustomers = $('#rowOfCustomers')
+        $.ajax({
+            url: "http://localhost:3000/api/customer",
+            success: function (data) {
+
+                $.extend({}, data)
+                console.log(data)
+                var customers = []
+//                $.each(data, function (name, memberId, address, zip, phone) {
+//                    customers.push(`<td>${name}</td><td>${memberId}</td><td>${address}</td><td>${zip}</td><td>${phone}</td>`)
+//                })
+
+                for (var i = 0; i < data.length; i++) {
+                    customers.push(`<tr id="rowCustomer${data[i]._id}">
+                                        <td>${i + 1}</td>
+                                        <td>${data[i].name}
+                                        </td><td>${data[i].memberId}</td>
+                                        <td>${data[i].address}</td><td>${data[i].zip}</td>
+                                        <td>${data[i].phone}</td>
+                                        <td>
+                                            <span>
+                                                <button id="buttonEditCustomer${data[i]._id}" class="btn btn-warning" onclick="editCustomer">Edit</button>
+                                                <button id="buttonDeleteCustomer${data[i]._id}" class="btn btn-danger" onclick="deleteCustomer('${data[i]._id}')">Delete</button>
+                                            </span>
+                                        </td>
+                                     </tr>`)
+                }
+
+                rowOfCustomers.append(customers.join(""))
+            }
+        })
+    })
+
+    $("#createCustomerForm").on('submit', function (e) {
+        e.preventDefault()
+        var name = $("input[name='name']").val()
+        var memberId = $("input[name='memberId']").val()
+        var address = $("input[name='address']").val()
+        var zip = $("input[name='zip']").val()
+        var phone = $("input[name='phone']").val()
+        addCustomerFromAPI(name, memberId, address, zip, phone)
+    })
+
+    function addCustomerFromAPI(name, memberId, address, zip, phone) {
+        $.ajax({
+            url: "http://localhost:3000/api/customer/create",
+            method: "post",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                name: name,
+                memberId: memberId,
+                address: address,
+                zip: zip,
+                phone: phone
+            },
+            success: function (customer) {
+                console.log(customer);
+                updateCreateCustomer(customer.customer)
+            }
+        })
+    }
+
+    function updateCreateCustomer(customer) {
+        var no = $('tr').length
+        var html = `<tr id="rowCustomer${customer._id}">
+                        <td>${no}</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.memberId}</td>
+                        <td>${customer.address}</td>
+                        <td>${customer.zip}</td>
+                        <td>${customer.phone}</td>
+                        <td>
+                            <span>
+                                <button id="buttonEditCustomer${customer._id}" class="btn btn-warning" onclick="editCustomer('${customer._id}')">Edit</button>
+                                <button id="buttonDeleteCustomer${customer._id}" class="btn btn-danger" onclick="deleteCustomer('${customer._id}')">Delete</button>
+                            </span>
+                        </td>
+                    </tr>`
+
+        $("tbody:last").append(html)
+        $("input[name='name']").val("")
+        $("input[name='memberId']").val("")
+        $("input[name='address']").val("")
+        $("input[name='zip']").val("")
+        $("input[name='phone']").val("")
+    }
+
+//    delete customer
+    function deleteCustomer(id) {
+        console.log(id)
+        var del = confirm("Are you sure you want to delete this customer?")
+        if (del) {
+            deleteCustomerFromAPI(id)
+        }
+    }
+
+    function deleteCustomerFromAPI(id) {
+        var temp = id
+        $.ajax({
+            url: `http://localhost:3000/api/customer/delete/${id}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id
+            },
+            success: function () {
+                updateDeleteCustomer(temp)
+            }
+        })
+    }
+
+    function updateDeleteCustomer(id) {
+        console.log(id)
+        $("tbody").find(`#rowCustomer${id}`).remove()
+        $("input[name='name']").val("")
+        $("input[name='memberId']").val("")
+        $("input[name='address']").val("")
+        $("input[name='zip']").val("")
+        $("input[name='phone']").val("")
+    }
+
+</script>
 
 </body>
 </html>

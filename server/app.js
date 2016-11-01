@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/shopping_cart')
+
 var routes = require('./routes/index');
 var api = require('./routes/api')
 
