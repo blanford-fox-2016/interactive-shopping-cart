@@ -8,7 +8,7 @@ let allCarts = (req, res, next) => {
       res.send(err)
     }else{
       console.log(`show all Carts`)
-      res.json(JSON.parse(all_Carts))
+      res.json(all_Carts)
     }
   }).sort({_id: -1}) // desc
 }
@@ -17,15 +17,15 @@ let addCart = (req, res, next) => {
   Carts.create({
     memberId          : req.body.memberId,
     total             : req.body.total,
-    transaction_date : req.body.transaction_date,
+    transaction_date  : req.body.transaction_date,
     itemList          : req.body.itemList
   }, (err, new_Cart) => {
     if(err){
       console.log(err)
       res.send(err)
     }else{
-      console.log(`${new_Cart} has been created`);
-      res.json(JSON.parse(new_Cart))
+      console.log(`New Cart has been created`);
+      res.json(new_Cart)
     }
 
   })
@@ -41,7 +41,7 @@ let editCart = (req, res, next) => {
       res.send(err)
     }else{
       console.log(`${edited_Cart} has been edited`)
-      res.json(JSON.parse(edited_Cart))
+      res.json(edited_Cart)
     }
   })
 }
@@ -59,7 +59,7 @@ let deleteCart = (req, res, next) => {
           res.send(err)
         }else{
           console.log(`${delete_Cart} has been deleted`)
-          res.json(JSON.parse(delete_Cart))
+          res.json(delete_Cart)
         }
       })
     }
