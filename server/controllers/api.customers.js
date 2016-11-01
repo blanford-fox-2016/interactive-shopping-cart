@@ -42,7 +42,7 @@ let editCustomer = (req, res, next) => {
       console.log(err)
       res.send(err)
     }else{
-      Customers.findById(req.params.id, (err, edited_item) => {
+      Customers.findById(req.params.id, (err, edited_Customer) => {
         if(err){
           console.log(err)
           res.send(err)

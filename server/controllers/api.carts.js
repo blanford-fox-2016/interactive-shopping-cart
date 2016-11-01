@@ -27,7 +27,6 @@ let addCart = (req, res, next) => {
       console.log(`New Cart has been created`);
       res.json(new_Cart)
     }
-
   })
 }
 
@@ -35,13 +34,20 @@ let editCart = (req, res, next) => {
   Carts.update({
     _id : req.params.id
   }, req.body,
-  (err, edited_Cart) => {
+  (err, status) => {
     if(err){
       console.log(err)
       res.send(err)
     }else{
-      console.log(`${edited_Cart} has been edited`)
-      res.json(edited_Cart)
+      Carts.findById(req.params.id, (err, edited_Cart) => {
+        if(err){
+          console.log(err)
+          res.send(err)
+        }else{
+          console.log(`${edited_Cart} has been edited`)
+          res.json(edited_Cart)
+        }
+      })
     }
   })
 }
