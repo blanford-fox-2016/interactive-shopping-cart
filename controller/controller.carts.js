@@ -8,10 +8,13 @@ let Carts = {
     data.create({
       memberId         : req.body.memberId,
       total            : req.body.total,
-      transactionDate  : Date.now(),
+      transactionDate  : new Date(),
       itemList         : req.body.itemList
+    }, (err,data) => {
+        err ? res.send(err) :res.json(data);
     });
   },
+
   list : (req, res) => {
     data.find({}, (err, data) => {
       err ? res.send(err) : res.json(data);

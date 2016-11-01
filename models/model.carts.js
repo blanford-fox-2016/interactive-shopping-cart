@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
-let cartsSchema = new mongoose.Schema({
-  memberId        : {type: String, ref = 'Customers'},
+let cartsSchema = new Schema({
+  memberId        : {
+    type: String,
+    ref: 'Customers',
+    foreignField: 'memberId'
+  },
   total           : Number,
   transactionDate : Date,
   itemList        : [{
-    _id       : {type: Schema.Types.ObjectId, ref: 'Items'},
+    itemCode      : {
+      type: String,
+      ref: 'Items',
+      foreignField: 'itemCode'
+    },
     qty       : Number,
     price     : Number
   }]

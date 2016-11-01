@@ -24,7 +24,7 @@ const costumers = require('./router/router.customers');
 const carts = require('./router/router.carts');
 
 
-app.use('/carts',carts)
+app.use('/cart',carts)
 app.use('/item', items)
 app.use('/customer',costumers)
 
