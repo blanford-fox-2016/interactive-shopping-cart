@@ -30,6 +30,8 @@ let cartsSchema = new Schema({
       price: Number
     }
   ]
+},{
+  timestamps: true
 })
 
 module.exports = mongoose.model('carts', cartsSchema)

@@ -7,7 +7,35 @@ $(document).ready(function(){
 })
 
 let submitEditItem = (id) => {
-  alert(id)
+  $.ajax({
+    url:  "http://localhost:3000/api/items/"+id,
+    method: 'PUT',
+    contentType: 'application/x-www-form-urlencoded',
+    success: function(edited_item) {
+      console.log(edited_item)
+      $('#itemCode').val(edited_item.itemCode)
+      $('#name').val(edited_item.name)
+      $('#description').val(edited_item.description)
+      $('#price').val(edited_item.price)
+      $('#stock').val(edited_item.stock)
+      // console.log(test);
+      // let all_data_HTML = ''
+      // for(var i = 0; i < all_data.length; i++){
+      //   all_data_HTML += `<tr>
+      //   <td>${all_data[i].itemCode}</td>
+      //   <td>${all_data[i].name}</td>
+      //   <td>${all_data[i].description}</td>
+      //   <td>${all_data[i].price}</td>
+      //   <td>${all_data[i].stock}</td>
+      //   <td>
+      //     <button type="button" class="btn btn-warning" id="edit_item" onclick="submitEditItem('${all_data[i]._id}')">Edit</button>
+      //     <button type="button" class="btn btn-danger" id="delete_item" onclick="submitDeleteItem('${all_data[i]._id}')">Delete</button>
+      //   </td>
+      //   </tr>`
+      // }
+      // $('#body_table_items').append(all_data_HTML)
+    }
+  })
 }
 
 let submitDeleteItem = (id) => {
@@ -17,7 +45,7 @@ let submitDeleteItem = (id) => {
 let showAllItems = () => {
   $.ajax({
     url:  "http://localhost:3000/api/items",
-    method: 'get',
+    method: 'GET',
     contentType: 'application/x-www-form-urlencoded',
     data: {
     },

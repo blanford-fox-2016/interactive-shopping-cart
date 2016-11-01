@@ -10,6 +10,8 @@ let customersSchema = new Schema({
   address   : String,
   zip       : Number,
   phone     : Number
+},{
+  timestamps: true
 })
 
 module.exports = mongoose.model('customers', customersSchema)

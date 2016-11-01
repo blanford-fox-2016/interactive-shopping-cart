@@ -10,6 +10,8 @@ let itemSchema = new Schema({
   description : String,
   price       : Number,
   stock       : Number
+},{
+  timestamps: true
 })
 
 
