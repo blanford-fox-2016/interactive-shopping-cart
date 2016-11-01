@@ -5,7 +5,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes/api');
+//routes variable
+const routes_api_items = require('./routes/api.items');
+const routes_api_carts = require('./routes/api.carts');
+const routes_api_customers = require('./routes/api.customers');
 
 //moongose config
 const mongoose = require('mongoose')
@@ -25,7 +28,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// routes
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+app.use('/api/item', routes_api_items);
+app.use('/api/cart', routes_api_carts);
+app.use('/api/customer', routes_api_customers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
