@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="text-center">Cart</h1>
+
+    <form class="form-horizontal" id="cartForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Member ID:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="memberId">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Total:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="total">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Transaction Date:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="transactionDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Item:</label>
+            <div class="col-sm-10">
+                <select name="itemList" id="">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" name="createCart" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <table class="table" id="rowOfCart">
+        <tr>
+            <td>No.</td>
+            <td>Member ID</td>
+            <td>Total</td>
+            <td>Transaction Date</td>
+            <td>Item List</td>
+            <td>Action</td>
+        </tr>
+
+    </table>
+</div>
+
+<script src="javascripts/jquery-3.1.1.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+
+<script>
+    $( document ).ready(function() {
+        var rowOfCart = $('#rowOfCart')
+        $.ajax({
+            url: "http://localhost:3000/api/cart",
+            success: function (data) {
+
+                $.extend({}, data)
+                var cart = []
+
+                for (var i = 0; i < data.length; i++) {
+                    cart.push(`<tr id="rowCart${data[i]._id}">
+                                        <td>${i + 1}</td>
+                                        </td><td>${data[i].memberId}</td>
+                                        <td>${data[i].total}</td>
+                                        <td>${data[i].transactionDate}</td>
+                                        <td>
+                                            ${data[i].itemList}
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <button id="buttonEditCart${data[i]._id}" class="btn btn-warning" onclick="editCart('${data[i]._id}')">Edit</button>
+                                                <button id="buttonDeleteCart${data[i]._id}" class="btn btn-danger" onclick="deleteCart('${data[i]._id}')">Delete</button>
+                                            </span>
+                                        </td>
+                                     </tr>`)
+                }
+
+                rowOfCart.append(cart.join(""))
+            }
+        })
+    })
+
+    $(document).on('click', 'button[name="createCart"]', function(e) {
+        e.preventDefault()
+        var memberId = $("input[name='memberId']").val()
+        var total = $("input[name='total']").val()
+        var transactionDate = $("input[name='transactionDate']").val()
+        var itemList = $("input[name='itemList']").val()
+        addCartFromAPI(memberId, total, transactionDate, itemList)
+    })
+
+    function addCartFromAPI(memberId, total, transactionDate, itemList) {
+        $.ajax({
+            url: "http://localhost:3000/api/cart/create",
+            method: "post",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                memberId: memberId,
+                total: total,
+                transactionDate: transactionDate,
+                itemList: itemList
+            },
+            success: function (item) {
+                updateCreateItem(item.item)
+            }
+        })
+    }
+
+    function updateCreateItem(item) {
+        var no = $('tr').length
+        var html = `<tr id="rowItem${item._id}">
+                        <td>${no}</td>
+                        <td>${item.memberId}</td>
+                        <td>${item.total}</td>
+                        <td>${item.transactionDate}</td>
+                        <td>${item.itemList}</td>
+                        <td>
+                            <span>
+                                <button id="buttonEditItem${item._id}" class="btn btn-warning" onclick="editItem('${item._id}')">Edit</button>
+                                <button id="buttonDeleteItem${item._id}" class="btn btn-danger" onclick="deleteItem('${item._id}')">Delete</button>
+                            </span>
+                        </td>
+                    </tr>`
+
+        $("tbody:last").append(html)
+        $("input[name='memberId']").val("")
+        $("input[name='total']").val("")
+        $("input[name='transactionDate']").val("")
+        $("input[name='itemList']").val("")
+    }
+
+    function deleteItem(id) {
+        console.log(id)
+        var del = confirm("Are you sure you want to delete this item?")
+        if (del) {
+            deleteItemFromAPI(id)
+        }
+    }
+
+    function deleteItemFromAPI(id) {
+        var temp = id
+        $.ajax({
+            url: `http://localhost:3000/api/item/delete/${id}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id
+            },
+            success: function () {
+                updateDeleteItem(temp)
+            }
+        })
+    }
+
+    function updateDeleteItem(id) {
+        console.log(id)
+        $("tbody").find(`#rowItem${id}`).remove()
+        $("input[name='memberId']").val("")
+        $("input[name='total']").val("")
+        $("input[name='transactionDate']").val("")
+        $("input[name='itemList']").val("")
+    }
+
+    function editItem(id) {
+        getItemFromAPI(id)
+    }
+
+    function getItemFromAPI(id) {
+        $.ajax({
+            url: `http://localhost:3000/api/item/update/${id}`,
+            method: "get",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id
+            },
+            success: function (item) {
+                getCart(item.item)
+            }
+        })
+    }
+
+    function getCart(item) {
+        var memberId = `input[name=memberId]`
+        var total = `input[name=total]`
+        var transactionDate = `input[name=transactionDate]`
+        var itemList = `input[name=itemList]`
+
+        $("form").find(memberId).val(item.memberId)
+        $("form").find(total).val(item.total)
+        $("form").find(transactionDate).val(item.transactionDate)
+        $("form").find(itemList).val(item.itemList)
+        $("form").find("button[name=createItem]").replaceWith(`<button type='submit' name='updateItem' class='btn btn-default'>Update</button>`)
+
+        var temp = $("input[name='id']").val()
+        if ( typeof temp != "undefined") {
+            $("input[name='id']").replaceWith(`<input type='hidden' class='form-control' name='id' value='${item._id}'>`)
+        }
+        else {
+            $(".form-group:first").append(`<input type='hidden' class='form-control' name='id' value='${item._id}'>`)
+        }
+
+    }
+
+    $(document).on('click', 'button[name="updateItem"]', function(e) {
+        e.preventDefault()
+        updateItemFromAPI(
+                $("input[name='id']").val(),
+                $("input[name='memberId']").val(),
+                $("input[name='total']").val(),
+                $("input[name='transactionDate']").val(),
+                $("input[name='itemList']").val()
+        )
+
+    });
+
+    function updateItemFromAPI(id, memberId, total, transactionDate, itemList) {
+        $.ajax({
+            url: `http://localhost:3000/api/item/update/${id}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id,
+                memberId: memberId,
+                total: total,
+                transactionDate: transactionDate,
+                itemList: itemList
+            },
+            success: function (data) {
+                console.log(data)
+                updateUpdateItem(data.item)
+            }
+        })
+    }
+
+    function updateUpdateItem(item) {
+        console.log(item)
+        var html = `<tr id="rowItem${item._id}">
+                        <td>${no}</td>
+                        <td>${item.memberId}</td>
+                        <td>${item.total}</td>
+                        <td>${item.transactionDate}</td>
+                        <td>${item.itemList}</td>
+                        <td>
+                            <span>
+                                <button id="buttonEditItem${item._id}" class="btn btn-warning" onclick="editItem('${item._id}')">Edit</button>
+                                <button id="buttonDeleteItem${item._id}" class="btn btn-danger" onclick="deleteItem('${item._id}')">Delete</button>
+                            </span>
+                        </td>
+                    </tr>`
+        $("tbody").find(`#rowItem${item._id}`).replaceWith(html)
+
+        $("form").find("button[name=updateItem]").replaceWith("<button type='submit' name='createItem' class='btn btn-default'>Submit</button>")
+        $("input[name='memberId']").val("")
+        $("input[name='total']").val("")
+        $("input[name='transactionDate']").val("")
+        $("input[name='itemList']").val("")
+    }
+
+
+
+</script>
+
+</body>
+</html>
