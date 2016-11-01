@@ -6,4 +6,5 @@ var controller = require('../controllers/customerController')
 /* GET home page. */
 router.get('/customer', controller.customerList);
 router.post('/customer', controller.customerCreate);
+router.delete('/customer', controller.customerDelete)
 module.exports = router;
