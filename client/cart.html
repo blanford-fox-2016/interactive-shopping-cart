@@ -18,7 +18,9 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Member ID:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="memberId">
+                <select name="memberId" class="form-control" id="selectCustomer">
+
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -30,15 +32,21 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Transaction Date:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="transactionDate">
+                <input type="date" class="form-control" name="transactionDate">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Item:</label>
             <div class="col-sm-10">
-                <select name="itemList" id="">
-                    <option value=""></option>
+                <select name="itemList" class="form-control" id="selectItem">
+
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Quantity:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="qty">
             </div>
         </div>
         <div class="form-group">
@@ -68,6 +76,43 @@
 
 <script>
     $( document ).ready(function() {
+        var selectCustomer = $('#selectCustomer')
+        $.ajax({
+            url: "http://localhost:3000/api/customer",
+            success: function (data) {
+
+                $.extend({}, data)
+                var customers = []
+
+                for (var i = 0; i < data.length; i++) {
+                    customers.push(`
+                                    <option value="${data[i].memberId}">${data[i].memberId}</option>
+                                   `)
+                }
+
+                selectCustomer.append(customers.join(""))
+            }
+        })
+
+
+        var selectItem = $('#selectItem')
+        $.ajax({
+            url: "http://localhost:3000/api/item",
+            success: function (data) {
+
+                $.extend({}, data)
+                var item = []
+
+                for (var i = 0; i < data.length; i++) {
+                    item.push(`
+                               <option value="${data[i].itemCode}">${data[i].name}</option>
+                              `)
+                }
+
+                selectItem.append(item.join(""))
+            }
+        })
+
         var rowOfCart = $('#rowOfCart')
         $.ajax({
             url: "http://localhost:3000/api/cart",
@@ -101,7 +146,7 @@
 
     $(document).on('click', 'button[name="createCart"]', function(e) {
         e.preventDefault()
-        var memberId = $("input[name='memberId']").val()
+        var memberId = $("select[name='memberId']").val()
         var total = $("input[name='total']").val()
         var transactionDate = $("input[name='transactionDate']").val()
         var itemList = $("input[name='itemList']").val()
@@ -119,24 +164,24 @@
                 transactionDate: transactionDate,
                 itemList: itemList
             },
-            success: function (item) {
-                updateCreateItem(item.item)
+            success: function (cart) {
+                updateCreateCart(cart.cart)
             }
         })
     }
 
-    function updateCreateItem(item) {
+    function updateCreateCart(cart) {
         var no = $('tr').length
-        var html = `<tr id="rowItem${item._id}">
+        var html = `<tr id="rowCart${cart._id}">
                         <td>${no}</td>
-                        <td>${item.memberId}</td>
-                        <td>${item.total}</td>
-                        <td>${item.transactionDate}</td>
-                        <td>${item.itemList}</td>
+                        <td>${cart.memberId}</td>
+                        <td>${cart.total}</td>
+                        <td>${cart.transactionDate}</td>
+                        <td>${cart.itemList}</td>
                         <td>
                             <span>
-                                <button id="buttonEditItem${item._id}" class="btn btn-warning" onclick="editItem('${item._id}')">Edit</button>
-                                <button id="buttonDeleteItem${item._id}" class="btn btn-danger" onclick="deleteItem('${item._id}')">Delete</button>
+                                <button id="buttonEditItem${cart._id}" class="btn btn-warning" onclick="editCart('${cart._id}')">Edit</button>
+                                <button id="buttonDeleteItem${cart._id}" class="btn btn-danger" onclick="deleteCart('${cart._id}')">Delete</button>
                             </span>
                         </td>
                     </tr>`
@@ -148,81 +193,81 @@
         $("input[name='itemList']").val("")
     }
 
-    function deleteItem(id) {
+    function deleteCart(id) {
         console.log(id)
-        var del = confirm("Are you sure you want to delete this item?")
+        var del = confirm("Are you sure you want to delete this cart?")
         if (del) {
-            deleteItemFromAPI(id)
+            deleteCartFromAPI(id)
         }
     }
 
-    function deleteItemFromAPI(id) {
+    function deleteCartFromAPI(id) {
         var temp = id
         $.ajax({
-            url: `http://localhost:3000/api/item/delete/${id}`,
+            url: `http://localhost:3000/api/cart/delete/${id}`,
             method: "delete",
             contentType: 'application/x-www-form-urlencoded',
             data: {
                 id: id
             },
             success: function () {
-                updateDeleteItem(temp)
+                updateDeleteCart(temp)
             }
         })
     }
 
-    function updateDeleteItem(id) {
+    function updateDeleteCart(id) {
         console.log(id)
-        $("tbody").find(`#rowItem${id}`).remove()
+        $("tbody").find(`#rowCart${id}`).remove()
         $("input[name='memberId']").val("")
         $("input[name='total']").val("")
         $("input[name='transactionDate']").val("")
         $("input[name='itemList']").val("")
     }
 
-    function editItem(id) {
-        getItemFromAPI(id)
+    function editCart(id) {
+        getCartFromAPI(id)
     }
 
-    function getItemFromAPI(id) {
+    function getCartFromAPI(id) {
         $.ajax({
-            url: `http://localhost:3000/api/item/update/${id}`,
+            url: `http://localhost:3000/api/cart/update/${id}`,
             method: "get",
             contentType: 'application/x-www-form-urlencoded',
             data: {
                 id: id
             },
-            success: function (item) {
-                getCart(item.item)
+            success: function (cart) {
+                getCart(cart.cart)
             }
         })
     }
 
-    function getCart(item) {
+    function getCart(cart) {
         var memberId = `input[name=memberId]`
         var total = `input[name=total]`
         var transactionDate = `input[name=transactionDate]`
         var itemList = `input[name=itemList]`
 
-        $("form").find(memberId).val(item.memberId)
-        $("form").find(total).val(item.total)
-        $("form").find(transactionDate).val(item.transactionDate)
-        $("form").find(itemList).val(item.itemList)
-        $("form").find("button[name=createItem]").replaceWith(`<button type='submit' name='updateItem' class='btn btn-default'>Update</button>`)
+        $("form").find(memberId).val(cart.memberId)
+        $("form").find(total).val(cart.total)
+        $("form").find(transactionDate).val(cart.transactionDate)
+        $("form").find(itemList).val(cart.itemList)
+        $("form").find("button[name=createCart]").replaceWith(`<button type='submit' name='updateCart' class='btn btn-default'>Update</button>`)
 
         var temp = $("input[name='id']").val()
         if ( typeof temp != "undefined") {
-            $("input[name='id']").replaceWith(`<input type='hidden' class='form-control' name='id' value='${item._id}'>`)
+            $("input[name='id']").replaceWith(`<input type='hidden' class='form-control' name='id' value='${cart._id}'>`)
         }
         else {
-            $(".form-group:first").append(`<input type='hidden' class='form-control' name='id' value='${item._id}'>`)
+            $(".form-group:first").append(`<input type='hidden' class='form-control' name='id' value='${cart._id}'>`)
         }
 
     }
 
-    $(document).on('click', 'button[name="updateItem"]', function(e) {
+    $(document).on('click', 'button[name="updateCart"]', function(e) {
         e.preventDefault()
-        updateItemFromAPI(
+        updateCartFromAPI(
                 $("input[name='id']").val(),
                 $("input[name='memberId']").val(),
                 $("input[name='total']").val(),
@@ -232,9 +277,9 @@
 
     });
 
-    function updateItemFromAPI(id, memberId, total, transactionDate, itemList) {
+    function updateCartFromAPI(id, memberId, total, transactionDate, itemList) {
         $.ajax({
-            url: `http://localhost:3000/api/item/update/${id}`,
+            url: `http://localhost:3000/api/cart/update/${id}`,
             method: "put",
             contentType: 'application/x-www-form-urlencoded',
             data: {
@@ -246,29 +291,29 @@
             },
             success: function (data) {
                 console.log(data)
-                updateUpdateItem(data.item)
+                updateUpdateCart(data.cart)
             }
         })
     }
 
-    function updateUpdateItem(item) {
-        console.log(item)
-        var html = `<tr id="rowItem${item._id}">
-                        <td>${no}</td>
-                        <td>${item.memberId}</td>
-                        <td>${item.total}</td>
-                        <td>${item.transactionDate}</td>
-                        <td>${item.itemList}</td>
+    function updateUpdateCart(cart) {
+        console.log(cart)
+        var html = `<tr id="rowItem${cart._id}">
+                        <td>tar</td>
+                        <td>${cart.memberId}</td>
+                        <td>${cart.total}</td>
+                        <td>${cart.transactionDate}</td>
+                        <td>${cart.itemList}</td>
                         <td>
                             <span>
-                                <button id="buttonEditItem${item._id}" class="btn btn-warning" onclick="editItem('${item._id}')">Edit</button>
-                                <button id="buttonDeleteItem${item._id}" class="btn btn-danger" onclick="deleteItem('${item._id}')">Delete</button>
+                                <button id="buttonEditCart${cart._id}" class="btn btn-warning" onclick="editCart('${cart._id}')">Edit</button>
+                                <button id="buttonDeleteCart${cart._id}" class="btn btn-danger" onclick="deleteCart('${cart._id}')">Delete</button>
                             </span>
                         </td>
                     </tr>`
-        $("tbody").find(`#rowItem${item._id}`).replaceWith(html)
+        $("tbody").find(`#rowCart${cart._id}`).replaceWith(html)
 
-        $("form").find("button[name=updateItem]").replaceWith("<button type='submit' name='createItem' class='btn btn-default'>Submit</button>")
+        $("form").find("button[name=updateCart]").replaceWith("<button type='submit' name='createCart' class='btn btn-default'>Submit</button>")
         $("input[name='memberId']").val("")
         $("input[name='total']").val("")
         $("input[name='transactionDate']").val("")

@@ -193,9 +193,9 @@ module.exports = {
     createCart: function (req, res) {
         var cart = new Cart({
             memberId: req.body.memberId,
-            total: req.body.description,
-            transactionDate: req.body.transactionDate,
-            itemList: req.body.itemList
+            total: req.body.total,
+            transactionDate: req.body.transactionDate
+            // itemList: req.body.itemList
         })
         cart.save(function (err, cart) {
             if (err) {
