@@ -4,8 +4,8 @@ let itemsSchema = new mongoose.Schema({
   itemCode: String,
   name: String,
   description: String,
-  price: INT,
-  stock: INT
+  price: Number,
+  stock: Number
 });
 
 let items = mongoose.model('items', itemsSchema)
