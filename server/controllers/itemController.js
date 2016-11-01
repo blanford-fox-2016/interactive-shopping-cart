@@ -1,6 +1,6 @@
 let Item = require('../models/Item')
 
-let all = () => {
+let all = (req, res, next) => {
   Item.find({}, (err, items) => {
     if (err) {
       console.log(err);
@@ -10,7 +10,7 @@ let all = () => {
   })
 }
 
-let one = () => {
+let one = (req, res, next) => {
   Item.findById({
     _id: req.params.id
   }, (err, item) => {
@@ -22,7 +22,7 @@ let one = () => {
   })
 }
 
-let add = () => {
+let add = (req, res, next) => {
   Item.create({
     itemCode: req.body.itemCode,
     name: req.body.name,
@@ -38,7 +38,7 @@ let add = () => {
   })
 }
 
-let edit = () => {
+let edit = (req, res, next) => {
   Item.update({
     _id: req.params.id
   }, {
@@ -56,7 +56,7 @@ let edit = () => {
   })
 }
 
-let destroy = () => {
+let destroy = (req, res, next) => {
   Item.remove({
     _id: req.params.id
   }, (err, item) => {

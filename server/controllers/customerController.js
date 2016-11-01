@@ -1,6 +1,6 @@
 let Customer = require('../models/Customer')
 
-let all = () => {
+let all = (req, res, next) => {
   Customer.find({}, (err, items) => {
     if (err) {
       console.log(err);
@@ -10,7 +10,7 @@ let all = () => {
   })
 }
 
-let one = () => {
+let one = (req, res, next) => {
   Customer.findById({
     _id: req.params.id
   }, (err, item) => {
@@ -22,7 +22,7 @@ let one = () => {
   })
 }
 
-let add = () => {
+let add = (req, res, next) => {
   Customer.create({
     name: req.body.name,
     memberId: req.body.memberId,
@@ -38,7 +38,7 @@ let add = () => {
   })
 }
 
-let edit = () => {
+let edit = (req, res, next) => {
   Customer.update({
     _id: req.params.id
   },{
@@ -56,7 +56,7 @@ let edit = () => {
   })
 }
 
-let destroy = () => {
+let destroy = (req, res, next) => {
   Customer.remove({
     _id: req.params.id
   }, (err, item) => {
