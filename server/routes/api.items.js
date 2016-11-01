@@ -8,12 +8,12 @@ const controller = require('../controllers/api.items')
 router.get('/', controller.allItems)
 
 /* process new item */
-router.post('/add', controller.newItem)
+router.post('/', controller.newItem)
 
 /* process edit item */
-router.put('/edit/:id', controller.editItem)
+router.put('/:id', controller.editItem)
 
 /* process delete item */
-router.delete('/delete/:id', controller.deleteItem)
+router.delete('/:id', controller.deleteItem)
 
 module.exports = router;

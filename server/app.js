@@ -31,9 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // routes
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-app.use('/api/item', routes_api_items);
-app.use('/api/cart', routes_api_carts);
-app.use('/api/customer', routes_api_customers);
+app.use('/api/items', routes_api_items);
+app.use('/api/carts', routes_api_carts);
+app.use('/api/customers', routes_api_customers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

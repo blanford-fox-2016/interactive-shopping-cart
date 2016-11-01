@@ -8,12 +8,12 @@ const controller = require('../controllers/api.carts')
 router.get('/', controller.allCarts)
 
 /* process new cart */
-router.post('/add', controller.addCart)
+router.post('/', controller.addCart)
 
 /* process edit cart */
-router.put('/edit/:id', controller.editCart)
+router.put('/:id', controller.editCart)
 
 /* delete cart */
-router.delete('/delete/:id', controller.deleteCart)
+router.delete('/:id', controller.deleteCart)
 
 module.exports = router

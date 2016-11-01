@@ -3,20 +3,22 @@ Interactive Shopping Cart with node.js & mongoose
 
 ## Restful API Routes
 
+Default development host and port = <http://localhost:3000>
+
 | Routes | HTTP | Description |
 |-----|----------|------------|
-| http://localhost:3000/api/item | GET | show all list items |
-| http://localhost:3000/api/item/add | POST | process new item |
-| http://localhost:3000/api/item/edit/{id_cart} | PUT | process edit item |
-| http://localhost:3000/api/item/delete/{id_cart} | DELETE | delete item |
-| http://localhost:3000/api/cart | GET | show all list carts |
-| http://localhost:3000/api/cart/add | POST | process new cart |
-| http://localhost:3000/api/cart/edit/{id_cart} | PUT | process edit cart |
-| http://localhost:3000/api/cart/delete/{id_cart} | DELETE | delete cart |
-| http://localhost:3000/api/customer | GET | show all customers customers |
-| http://localhost:3000/api/customer/add | POST | process new customer |
-| http://localhost:3000/api/customer/edit/{id_book} | PUT | process edit customer |
-| http://localhost:3000/api/customer/{id_book} | DELETE | delete customer |
+| api/items | GET | show all list items |
+| api/items | POST | process new item |
+| api/items/:id | PUT | process edit item |
+| api/items/:id | DELETE | delete item |
+| api/carts | GET | show all list carts |
+| api/carts | POST | process new cart |
+| api/carts/:id | PUT | process edit cart |
+| api/carts/:id | DELETE | delete cart |
+| api/customers | GET | show all customers customers |
+| api/customers | POST | process new customer |
+| api/customers/:id | PUT | process edit customer |
+| api/customers/:id | DELETE | delete customer |
 
 ## Project Structure
 

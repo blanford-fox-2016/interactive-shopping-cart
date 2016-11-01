@@ -8,12 +8,12 @@ const controller = require('../controllers/api.customers')
 router.get('/', controller.allCustomers)
 
 /* process new customer */
-router.post('/add', controller.addCustomer)
+router.post('/', controller.addCustomer)
 
 /* process edit customer */
-router.put('/edit/:id', controller.editCustomer)
+router.put('/:id', controller.editCustomer)
 
 /* delete customer */
-router.delete('/delete/:id', controller.deleteCustomer)
+router.delete('/:id', controller.deleteCustomer)
 
 module.exports = router
