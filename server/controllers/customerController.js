@@ -1,7 +1,7 @@
-let Item = require('../models/Item')
+let Customer = require('../models/Customer')
 
 let all = () => {
-  Item.find({}, (err, items) => {
+  Customer.find({}, (err, items) => {
     if (err) {
       console.log(err);
     } else {
@@ -11,7 +11,7 @@ let all = () => {
 }
 
 let one = () => {
-  Item.findById({
+  Customer.findById({
     _id: req.params.id
   }, (err, item) => {
     if (err) {
@@ -23,12 +23,12 @@ let one = () => {
 }
 
 let add = () => {
-  Item.create({
-    itemCode: req.body.itemCode,
+  Customer.create({
     name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    stock: req.body.stock
+    memberId: req.body.memberId,
+    address: req.body.address,
+    zip: req.body.zip,
+    phone: req.body.phone
   }, (err, item) => {
     if (err) {
       console.log(err);
@@ -39,14 +39,14 @@ let add = () => {
 }
 
 let edit = () => {
-  Item.update({
+  Customer.update({
     _id: req.params.id
-  }, {
-    itemCode: req.body.itemCode,
+  },{
     name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    stock: req.body.stock
+    memberId: req.body.memberId,
+    address: req.body.address,
+    zip: req.body.zip,
+    phone: req.body.phone
   }, (err, item) => {
     if (err) {
       console.log(err);
@@ -57,7 +57,7 @@ let edit = () => {
 }
 
 let destroy = () => {
-  Item.remove({
+  Customer.remove({
     _id: req.params.id
   }, (err, item) => {
     if (err) {
