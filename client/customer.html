@@ -14,7 +14,7 @@
 
     <h1 class="text-center">Customer</h1>
 
-    <form class="form-horizontal" id="createCustomerForm">
+    <form class="form-horizontal" id="customerForm">
         <div class="form-group">
             <label class="control-label col-sm-2">Name:</label>
             <div class="col-sm-10">
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" name="createCustomer" class="btn btn-default">Submit</button>
             </div>
         </div>
     </form>
@@ -79,11 +79,7 @@
             success: function (data) {
 
                 $.extend({}, data)
-                console.log(data)
                 var customers = []
-//                $.each(data, function (name, memberId, address, zip, phone) {
-//                    customers.push(`<td>${name}</td><td>${memberId}</td><td>${address}</td><td>${zip}</td><td>${phone}</td>`)
-//                })
 
                 for (var i = 0; i < data.length; i++) {
                     customers.push(`<tr id="rowCustomer${data[i]._id}">
@@ -94,7 +90,7 @@
                                         <td>${data[i].phone}</td>
                                         <td>
                                             <span>
-                                                <button id="buttonEditCustomer${data[i]._id}" class="btn btn-warning" onclick="editCustomer">Edit</button>
+                                                <button id="buttonEditCustomer${data[i]._id}" class="btn btn-warning" onclick="editCustomer('${data[i]._id}')">Edit</button>
                                                 <button id="buttonDeleteCustomer${data[i]._id}" class="btn btn-danger" onclick="deleteCustomer('${data[i]._id}')">Delete</button>
                                             </span>
                                         </td>
@@ -106,7 +102,8 @@
         })
     })
 
-    $("#createCustomerForm").on('submit', function (e) {
+    $(document).on('click', 'button[name="createCustomer"]', function(e) {
+        console.log("FIRED!!!!")
         e.preventDefault()
         var name = $("input[name='name']").val()
         var memberId = $("input[name='memberId']").val()
@@ -129,7 +126,6 @@
                 phone: phone
             },
             success: function (customer) {
-                console.log(customer);
                 updateCreateCustomer(customer.customer)
             }
         })
@@ -160,7 +156,6 @@
         $("input[name='phone']").val("")
     }
 
-//    delete customer
     function deleteCustomer(id) {
         console.log(id)
         var del = confirm("Are you sure you want to delete this customer?")
@@ -193,6 +188,109 @@
         $("input[name='zip']").val("")
         $("input[name='phone']").val("")
     }
+    
+    function editCustomer(id) {
+        getCustomerFromAPI(id)
+    }
+
+    function getCustomerFromAPI(id) {
+        $.ajax({
+            url: `http://localhost:3000/api/customer/update/${id}`,
+            method: "get",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id
+            },
+            success: function (customer) {
+                getCustomer(customer.customer)
+            }
+        })
+    }
+
+    function getCustomer(customer) {
+        var name = `input[name=name]`
+        var memberId = `input[name=memberId]`
+        var address = `input[name=address]`
+        var zip = `input[name=zip]`
+        var phone = `input[name=phone]`
+
+        $("form").find(name).val(customer.name)
+        $("form").find(memberId).val(customer.memberId)
+        $("form").find(address).val(customer.address)
+        $("form").find(zip).val(customer.zip)
+        $("form").find(phone).val(customer.phone)
+        $("form").find("button[name=createCustomer]").replaceWith(`<button type='submit' name='updateCustomer' class='btn btn-default'>Update</button>`)
+
+        var temp = $("input[name='id']").val()
+        if ( typeof temp != "undefined") {
+            $("input[name='id']").replaceWith(`<input type='hidden' class='form-control' name='id' value='${customer._id}'>`)
+        }
+        else {
+            $(".form-group:first").append(`<input type='hidden' class='form-control' name='id' value='${customer._id}'>`)
+        }
+
+    }
+
+    $(document).on('click', 'button[name="updateCustomer"]', function(e) {
+        e.preventDefault()
+        updateCustomerFromAPI(
+            $("input[name='id']").val(),
+            $("input[name='name']").val(),
+            $("input[name='memberId']").val(),
+            $("input[name='address']").val(),
+            $("input[name='zip']").val(),
+            $("input[name='phone']").val()
+        )
+
+    });
+
+    function updateCustomerFromAPI(id, name, memberId, address, zip, phone) {
+        $.ajax({
+            url: `http://localhost:3000/api/customer/update/${id}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: id,
+                name: name,
+                memberId: memberId,
+                address: address,
+                zip: zip,
+                phone: phone
+            },
+            success: function (data) {
+                console.log(data)
+                setTimeout(updateUpdateCustomer(data.customer), 3000)
+            }
+        })
+    }
+
+    function updateUpdateCustomer(customer) {
+        console.log(customer)
+        var html = `<tr id="rowCustomer${customer._id}">
+                        <td>tar</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.memberId}</td>
+                        <td>${customer.address}</td>
+                        <td>${customer.zip}</td>
+                        <td>${customer.phone}</td>
+                        <td>
+                            <span>
+                                <button id="buttonEditCustomer${customer._id}" class="btn btn-warning" onclick="editCustomer('${customer._id}')">Edit</button>
+                                <button id="buttonDeleteCustomer${customer._id}" class="btn btn-danger" onclick="deleteCustomer('${customer._id}')">Delete</button>
+                            </span>
+                        </td>
+                    </tr>`
+        $("tbody").find(`#rowCustomer${customer._id}`).replaceWith(html)
+
+        $("form").find("button[name=updateCustomer]").replaceWith("<button type='submit' name='createCustomer' class='btn btn-default'>Submit</button>")
+        $("input[name='name']").val("")
+        $("input[name='memberId']").val("")
+        $("input[name='address']").val("")
+        $("input[name='zip']").val("")
+        $("input[name='phone']").val("")
+    }
+
+
 
 </script>
 
