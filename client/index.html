@@ -28,7 +28,7 @@
       <!-- end navbar -->
 
       <!-- form add item -->
-      <form class="form-horizontal" method="post">
+      <form class="form-horizontal" method="post" id="form_new_item">
         <div class="form-group">
           <label class="control-label col-sm-2" for="itemCode">Item's Code</label>
           <div class="col-sm-10">
@@ -65,8 +65,25 @@
           </div>
         </div>
       </form>
+      <!-- form add item -->
+
+      <!-- table list item -->
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Item's Code</th>
+            <th>Item's Name</th>
+            <th>Description</th>
+            <th>Item's Price</th>
+            <th>Item's Stock</th
+          </tr>
+        </thead>
+        <tbody id="body_table_items">
+
+        </tbody>
+      </table>
+      <!-- end table list item -->
     </div>
-    <!-- form add item -->
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- script.js -->

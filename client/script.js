@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#btn_add_item').click(() => {
+  $('#btn_add_item').on('click', () => {
     let new_data = {
       itemCode : $('#itemCode').val(),
       name : $('#name').val(),
@@ -16,6 +16,7 @@ $(document).ready(function(){
       data      : new_data,
       success   : (data) => {
         console.log(data)
+        $('#form_new_item')[0].reset()
       },
       error     : (err) => {
         console.log('error nih: ', err);
