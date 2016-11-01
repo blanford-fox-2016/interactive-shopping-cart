@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-//api controller
+//api items controller
 const controller = require('../controllers/api.items')
 
 /* show all list items */
@@ -11,6 +11,9 @@ router.get('/', controller.allItems)
 router.post('/add', controller.newItem)
 
 /* process edit item */
-router.post('/add', controller.editItem)
+router.put('/add', controller.editItem)
+
+/* process delete item */
+router.delete('/delete/:id', controller.deleteItem)
 
 module.exports = router;
