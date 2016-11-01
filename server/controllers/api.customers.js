@@ -8,7 +8,7 @@ let allCustomers = (req, res, next) => {
       res.send(err)
     }else{
       console.log(`show all Customers`)
-      res.json(JSON.parse(all_Customers))
+      res.json(all_Customers)
     }
   }).sort({_id: -1}) // desc
 }
@@ -25,8 +25,9 @@ let addCustomer = (req, res, next) => {
       console.log(err)
       res.send(err)
     }else{
-      console.log(`${new_Customer} has been created`);
-      res.json(JSON.parse(new_Customer))
+      console.log(new_Customer);
+      console.log(`New Customer has been created`);
+      res.json(new_Customer)
     }
 
   })
@@ -42,7 +43,7 @@ let editCustomer = (req, res, next) => {
       res.send(err)
     }else{
       console.log(`${edited_Customer} has been edited`)
-      res.json(JSON.parse(edited_Customer))
+      res.json(edited_Customer)
     }
   })
 }
@@ -60,7 +61,7 @@ let deleteCustomer = (req, res, next) => {
           res.send(err)
         }else{
           console.log(`${delete_Customer} has been deleted`)
-          res.json(JSON.parse(delete_Customer))
+          res.json(delete_Customer)
         }
       })
     }
