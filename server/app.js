@@ -5,10 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var cors = require('cors')
 var api = require('./routes/api')
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/shopping-cart');
-var cors = require('cors')
+
 var app = express();
 
 // view engine setup

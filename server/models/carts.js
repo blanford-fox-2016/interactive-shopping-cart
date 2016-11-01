@@ -1,3 +1,5 @@
+var mongoose = require('mongoose');
+
 var cartSchema = mongoose.Schema({
     "memberId" : String,
     "total" : String,

@@ -1,3 +1,5 @@
+var mongoose = require('mongoose');
+
 var itemSchema = mongoose.Schema({
     "itemCode" : String,
     "name" : String,

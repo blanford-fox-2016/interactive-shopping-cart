@@ -3,7 +3,7 @@ var customer = require('../models/customers')
 module.exports = {
   customerList: function(req, res, next) {
     customer.find(function (err, customer) {
-      if (err) return console.error(err);
+      if (err) console.error(err);
       res.json(customer)
     })
   }, // end function user list
@@ -21,5 +21,21 @@ module.exports = {
     }).then(function(data){
       res.json(data)
     })
-  } // end of customerCreate
+  }, // end of customerCreate
+  customerDelete: function (req, res, next){
+    var id = req.body.id
+    customer.findOneAndRemove({ memberId : id }, function(err) {
+
+      if (!err){
+        res.json(id)
+      }else{
+        console.log("there something error");
+      }
+
+    });
+  },
+  customerUpdate: function (req,res,next){
+    res.json("success");
+  }
+
 }
