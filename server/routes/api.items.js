@@ -11,7 +11,7 @@ router.get('/', controller.allItems)
 router.post('/add', controller.newItem)
 
 /* process edit item */
-router.put('/add', controller.editItem)
+router.put('/edit/:id', controller.editItem)
 
 /* process delete item */
 router.delete('/delete/:id', controller.deleteItem)
