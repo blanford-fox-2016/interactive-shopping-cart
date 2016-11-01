@@ -2,39 +2,48 @@
 
 const data = require('../models/model.items');
 
-let Customer = {
+let Items = {
   create : (req, res) => {
     data.create({
       itemCode    : req.body.itemCode,
-      title       : req.body.title,
+      name        : req.body.name,
       description : req.body.description,
       price       : req.body.price,
       stock       : req.body.stock
-    }
+    }, (err, data) => {
+      err ? res.send(err) : res.json(data);
+    })
   },
 
   list : (req, res) => {
-    data.find({}, (data) => {
-      res.json(data);
-    })
-    //res.send(data.map(book => book.title))
-  },
-
-  one : (req, res) => {
-    console.log('done');
-  },
-
-  get : (req, res) => {
-    res.send(data.filter(x => x.id == req.params.id))
-  },
-
-  delete : (req, res) => {
-    res.send('delete boo')
+    data.find({}, (err, data) => {
+      err ? res.send(err) : res.json(data)
+    });
   },
 
   find : (req, res) => {
-    res.send()
+    data.find({name : req.params.name}, (err, data) => {
+      err ? res.send(err) : res.json(data);
+    })
+  },
+
+  update : (req, res) => {
+    data.findOneAndUpdate({name : req.params.name},{
+      itemCode    : req.body.itemCode,
+      name        : req.body.name,
+      description : req.body.description,
+      price       : req.body.price,
+      stock       : req.body.stock
+    }, (err, data) => {
+      err ? res.send(err) : res.json(data);
+    })
+  },
+
+  delete : (req, res) => {
+    data.findOneAndRemove({name : req.params.name}, (err, data) => {
+      err ? res.send(err) : res.send(data);
+    })
   }
 }
 
-module.exports = Book
+module.exports = Items
