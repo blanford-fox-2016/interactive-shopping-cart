@@ -55,5 +55,57 @@ module.exports = {
                 res.json(data)
             }
         })
+    },
+    viewCustomers: function(req, res, next) {
+        customer.find({}, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
+    addCustomer: function(req, res, next) {
+        customer.create({
+            name: req.body.name,
+            memberId: req.body.memberId,
+            address: req.body.address,
+            zip: req.body.zip,
+            phone: req.body.phone
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
+    editCustomer: function(req, res, next) {
+        customer.update({
+            _id: req.params.id
+        }, {
+            name: req.body.name,
+            memberId: req.body.memberId,
+            address: req.body.address,
+            zip: req.body.zip,
+            phone: req.body.phone
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
+    removeCustomer: function(req, res, next) {
+        customer.remove({
+            _id: req.params.id
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
     }
 }
