@@ -22,19 +22,24 @@ let Carts = {
   },
 
   find : (req, res) => {
-    data.findOne({title : req.params.title}, (err, data) => {
+    data.findOne({memberId : req.params.memberId}, (err, data) => {
       err ? res.send(err) : res.json(data);
     })
   },
 
   update : (req, res) => {
-    data.findOneAndUpdate({title : req.params.title}, (err, data) => {
+    data.findOneAndUpdate({memberId : req.params.memberId}, {
+      memberId         : req.body.memberId,
+      total            : req.body.total,
+      transactionDate  : new Date(),
+      itemList         : req.body.itemList
+    }, (err, data) => {
       err ? res.send(err) : res.json(data);
     })
   },
 
   delete : (req, res) => {
-    data.findOneAndRemove({title : req.params.title}, (err, data) => {
+    data.findOneAndRemove({memberId : req.params.memberId}, (err, data) => {
       err ? res.send(err) : res.send(data);
     })
   }

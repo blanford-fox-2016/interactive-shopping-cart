@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive Shopping Chart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <form style="margin-top:25px;margin-left:10px;margin-right:15px">
+      <div >
+        <label >Item code</label>
+        <input type='text' class="form-control" id="customerId">
+      </div>
+      <div >
+        <label for="pwd">Name</label>
+        <input  type='text' class="form-control" id="customerName">
+      </div>
+      <div >
+        <label for="pwd">Description</label>
+        <input  type="text" class="form-control"  id="customerAddress">
+      </div>
+      <div >
+        <label for="pwd">Price</label>
+        <input type='text' class="form-control" id="customerZip">
+      </div>
+      <div >
+        <label for="pwd">Stock</label>
+        <input type='text' class="form-control" id="cusomerPhone">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-default" onclick="addCustomer()">Submit</button>
+    </form>
+
+
+    <h1> List of Customers </h1>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>memberId</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>ZIP</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody id="listOfCustomers">
+      </tbody>
+    </table>
+  </body>
+  <script type="text/javascript">
+  let sendCustData = (custData) => {
+    $.ajax({
+      url         : "http://localhost:3000/customer/create",
+      method      : 'post',
+      contentType : 'application/x-www-form-urlencoded',
+      data        : custData,
+      success     : () => {
+        var html = data.map(x => '<td>' + x + '</td> /n');
+        var resultHTML = "<tr>" + html.join("") + "</tr>"
+        $('#listOfCustomers').append(resultHTML)
+      }
+    })
+  }
+
+  let addCustomer = () => {
+    $(document).ready(() => {
+      customerData = {
+        name      : $('#customerName').val(),
+        memberId  : $('#customerId').val(),
+        address   : $('#customerAddress').val(),
+        zip       : $('#customerZip').val(),
+        phone     : $('#cusomerPhone').val()
+      }
+      sendCustData(JSON.stringify(customerData));
+    })
+  }
+
+  $(document).ready(() => {
+    $.ajax({
+      url         : "http://localhost:3000/customer",
+      method      : 'get',
+      contentType : 'application/x-www-form-urlencoded',
+      data        : {},
+      success: function(data) {
+        console.log(data)
+        let resultHTML = `<tr>
+        <td>${data.memberId}</td>
+        <td>${data.name}</td>
+        <td>${data.address}</td>
+        <td>${data.zip}</td>
+        <td>${data.phone}</td>
+        </tr>`
+        $("#listOfCustomers").append(resultHTML)
+      }
+    })
+  })
+
+  </script>
+</html>

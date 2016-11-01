@@ -9,8 +9,8 @@ const controller = require('../controller/controller.carts');
 
 router.get('/', controller.list);
 router.get('/find/:name', controller.find);
-router.get('/delete/:name', controller.delete);
-router.post('/update/:name', controller.update);
+router.delete('/delete/:name', controller.delete);
+router.put('/update/:name', controller.update);
 router.post('/create/', controller.create);
 
 

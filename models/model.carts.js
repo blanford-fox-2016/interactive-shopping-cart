@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
 
-let cartsSchema = new Schema({
+let cartsSchema = new mongoose.Schema({
   memberId        : {
     type: String,
     ref: 'Customers',
