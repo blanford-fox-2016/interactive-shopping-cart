@@ -1,0 +1,34 @@
+{
+  "name": "interactive-shopping-cart-by-ryan",
+  "version": "1.0.0",
+  "description": "shopping cart web application with jQuery",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blanford-fox-2016/interactive-shopping-cart.git"
+  },
+  "keywords": [
+    "shopping-cart",
+    "basic",
+    "CRUD",
+    "WebApp",
+    "with",
+    "Jquery"
+  ],
+  "author": "ryanandhaka <ryan.andhaka@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blanford-fox-2016/interactive-shopping-cart/issues"
+  },
+  "homepage": "https://github.com/blanford-fox-2016/interactive-shopping-cart#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.5"
+  }
+}
