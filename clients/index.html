@@ -95,10 +95,19 @@
       contentType : 'application/x-www-form-urlencoded',
       data        : {},
       success: function(data) {
-        var html   = data.map(x => '<td>' + x + '</td>');
-        var resultHTML = "<tr>" + html.join("") + "</tr>"
-        $('#listOfCustomers').append(resultHTML)
-      }
+        console.log(data)
+           var dataHTML
+           for(var i = 0; i < data.length; i++){
+             dataHTML += `<tr>
+             <td>${data[i].memberId}</td>
+             <td>${data[i].name}</td>
+             <td>${data[i].address}</td>
+             <td>${data[i].zip}</td>
+             <td>${data[i].phone}</td>
+             </tr>`
+           }
+           $('#listOfCustomers').append(dataHTML)
+         }
     })
   })
 
