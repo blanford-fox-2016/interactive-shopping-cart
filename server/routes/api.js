@@ -6,8 +6,11 @@ var cartController = require('../controllers/cartController')
 
 /* GET home page. */
 router.get('/customer', customerController.customerList);
+router.get('/customer/update', customerController.getCustomerUpdate);
 router.post('/customer', customerController.customerCreate);
+router.put('/customer', customerController.customerUpdate);
 router.delete('/customer', customerController.customerDelete);
+
 
 /* route for item */
 router.get('/item', itemController.itemList);
