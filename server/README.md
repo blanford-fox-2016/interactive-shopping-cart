@@ -1,27 +1,22 @@
 # Interactive-Shopping-Cart
 Interactive Shopping Cart with node.js & mongoose
 
-## HTTP Routes
+## Restful API Routes
 
 | Routes | HTTP | Description |
 |-----|----------|------------|
-| http://localhost:3000/ | GET | show menu |
-| http://localhost:3000/item | GET | show list items |
-| http://localhost:3000/item/add | POST | process form new cart |
-| http://localhost:3000/item/{id_cart}/edit | GET | show form edit item |
-| http://localhost:3000/item/{id_cart}/edit | PUT | process form edit item |
-| http://localhost:3000/item/{id_cart}/delete | DELETE | delete item |
-| http://localhost:3000/cart | GET | show form new cart |
-| http://localhost:3000/cart/add | POST | process form new cart |
-| http://localhost:3000/cart/{id_cart}/edit | GET | show form edit cart |
-| http://localhost:3000/cart/{id_cart}/edit | PUT | process form edit cart |
-| http://localhost:3000/cart/{id_cart}/delete | DELETE | delete cart |
-| http://localhost:3000/customer | GET | show customers list |
-| http://localhost:3000/customer/add | GET | show form new customer |
-| http://localhost:3000/customer/add | POST | process form new customer |
-| http://localhost:3000/customer/{id_book}/edit | GET | show form edit customer |
-| http://localhost:3000/customer/{id_book}/edit | PUT | process form edit customer |
-| http://localhost:3000/customer/{id_book}/delete | DELETE | delete customer |
+| http://localhost:3000/api/item | GET | show all list items |
+| http://localhost:3000/api/item/add | POST | process new cart |
+| http://localhost:3000/api/item/edit/{id_cart} | PUT | process edit item |
+| http://localhost:3000/api/item/delete/{id_cart} | DELETE | delete item |
+| http://localhost:3000/api/cart | GET | show all list carts |
+| http://localhost:3000/api/cart/add | POST | process new cart |
+| http://localhost:3000/api/cart/edit/{id_cart} | PUT | process edit cart |
+| http://localhost:3000/api/cart/delete/{id_cart} | DELETE | delete cart |
+| http://localhost:3000/api/customer | GET | show all customers lists |
+| http://localhost:3000/api/customer/add | POST | process new customer |
+| http://localhost:3000/api/customer/edit/{id_book} | PUT | process edit customer |
+| http://localhost:3000/api/customer/{id_book} | DELETE | delete customer |
 
 ## Project Structure
 
