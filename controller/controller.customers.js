@@ -5,7 +5,8 @@ const data = require('../models/model.customers');
 
 let Customers = {
   create : (req, res) => {
-    var result = JSON.parse(req.body.data);
+    console.log(req.body.data);
+    let result = req.body.data
     data.create({
       name             : result.name,
       memberId         : result.memberId,
