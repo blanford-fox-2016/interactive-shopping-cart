@@ -5,7 +5,7 @@ let cartsSchema = new mongoose.Schema({
   total           : Number,
   transactionDate : Date,
   itemList        : [{
-    _id       : {type: Schema.Types.ObjectId, ref: 'Items'}
+    _id       : {type: Schema.Types.ObjectId, ref: 'Items'},
     qty       : Number,
     price     : Number
   }]

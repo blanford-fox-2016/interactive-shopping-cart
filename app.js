@@ -17,19 +17,16 @@ mongoose.connect("mongodb://localhost/database")
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const item = require('./controller/controller.items');
-const chart = require('./controller/controller.items');
 
-router.post('/', item.create);
-router.post('/chart', chart.create)
-router.post('/item', item.create)
-router.get('/', item.list)
-router.get('/:name', item.find)
-router.post('/update/:name',item.update)
-router.post('/delete/:name',item.delete)
+// Register router
+const items = require('./router/router.items');
+const costumers = require('./router/router.customers');
+const carts = require('./router/router.carts');
 
-app.use('/', router)
 
+app.use('/carts',carts)
+app.use('/item', items)
+app.use('/customer',costumers)
 
 // listening the app
 const port = process.env.port || 3000;
