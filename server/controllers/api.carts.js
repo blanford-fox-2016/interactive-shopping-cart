@@ -13,7 +13,7 @@ let allCarts = (req, res, next) => {
   }).sort({_id: -1}) // desc
 }
 
-let newCart = (req, res, next) => {
+let addCart = (req, res, next) => {
   Carts.create({
     memberId          : req.body.memberId,
     total             : req.body.total,
@@ -67,8 +67,8 @@ let deleteCart = (req, res, next) => {
 }
 
 module.exports = {
-  allCarts: allCarts,
-  addCart: addCart,
-  editCart: editCart,
+  allCarts  : allCarts,
+  addCart   : addCart,
+  editCart  : editCart,
   deleteCart: deleteCart
 }

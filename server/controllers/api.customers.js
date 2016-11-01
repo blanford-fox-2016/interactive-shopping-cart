@@ -13,7 +13,7 @@ let allCustomers = (req, res, next) => {
   }).sort({_id: -1}) // desc
 }
 
-let newCustomer = (req, res, next) => {
+let addCustomer = (req, res, next) => {
   Customers.create({
     name        : req.body.name,
     memberId    : req.body.memberId,
@@ -68,8 +68,8 @@ let deleteCustomer = (req, res, next) => {
 }
 
 module.exports = {
-  allCustomers: allCustomers,
-  addCustomer: addCustomer,
-  editCustomer: editCustomer,
+  allCustomers  : allCustomers,
+  addCustomer   : addCustomer,
+  editCustomer  : editCustomer,
   deleteCustomer: deleteCustomer
 }

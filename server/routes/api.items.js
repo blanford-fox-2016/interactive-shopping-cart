@@ -8,7 +8,7 @@ const controller = require('../controllers/api.items')
 router.get('/', controller.allItems)
 
 /* process new item */
-router.post('/', controller.newItem)
+router.post('/', controller.addItem)
 
 /* process edit item */
 router.put('/:id', controller.editItem)

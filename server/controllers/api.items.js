@@ -13,7 +13,7 @@ let allItems = (req, res, next) => {
   }).sort({_id: -1}) // desc
 }
 
-let newItem = (req, res, next) => {
+let addItem = (req, res, next) => {
   Items.create({
     itemCode    : req.body.itemCode,
     name        : req.body.name,
@@ -68,8 +68,8 @@ let deleteItem = (req, res, next) => {
 }
 
 module.exports = {
-  allItems: allItems,
-  newItem: newItem,
-  editItem: editItem,
+  allItems  : allItems,
+  addItem   : addItem,
+  editItem  : editItem,
   deleteItem: deleteItem
 }
