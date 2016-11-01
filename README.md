@@ -57,19 +57,20 @@ Here are some steps you've to follow for running this shopping-cart apps on your
 ## API References
 
 List off all routes :
+Default development host & port : http://localhost:3000/
 
 |  Route | HTTP | Description |
 |--------|------|-------------|
-|http://localhost:3000/api/customer | GET | Get all customers list|
-|http://localhost:3000/api/customer/:id | GET | Get spesific customer data by id|
-|http://localhost:3000/api/customer/add | POST | Create new customer data|
-|http://localhost:3000/api/customer/:id/edit | PUT | Edit spesific customer data by id|
-|http://localhost:3000/api/customer/:id/destroy | DELETE | DELETE spesific customer data by id|
-|http://localhost:3000/api/item | GET | Get all items list|
-|http://localhost:3000/api/item/:id | GET | Get spesific item data by id|
-|http://localhost:3000/api/item/add | POST | Create new item data|
-|http://localhost:3000/api/item/:id/edit | PUT | Edit spesific item data by id|
-|http://localhost:3000/api/item/:id/destroy | DELETE | DELETE spesific item data by id|
+|api/customer | GET | Get all customers list|
+|api/customer/:id | GET | Get spesific customer data by id|
+|api/customer/ | POST | Create new customer data|
+|api/customer/:id | PUT | Edit spesific customer data by id|
+|api/customer/:id | DELETE | DELETE spesific customer data by id|
+|api/item | GET | Get all items list|
+|api/item/:id | GET | Get spesific item data by id|
+|api/item | POST | Create new item data|
+|api/item/:id | PUT | Edit spesific item data by id|
+|api/item/:id | DELETE | DELETE spesific item data by id|
 
 <!-- List of link :
 
