@@ -14,6 +14,7 @@ let allItems = (req, res, next) => {
 }
 
 let addItem = (req, res, next) => {
+  console.log(req.body);
   Items.create({
     itemCode    : req.body.itemCode,
     name        : req.body.name,
@@ -37,13 +38,20 @@ let editItem = (req, res, next) => {
   Items.update({
     _id : req.params.id
   }, req.body,
-  (err, edited_item) => {
+  (err, status) => {
     if(err){
       console.log(err)
       res.send(err)
     }else{
-      console.log(`${edited_item} has been edited`)
-      res.json(edited_item)
+      Items.findById(req.params.id, (err, edited_item) => {
+        if(err){
+          console.log(err)
+          res.send(err)
+        }else{
+          console.log(`${edited_item} has been edited`)
+          res.json(edited_item)
+        }
+      })
     }
   })
 }
