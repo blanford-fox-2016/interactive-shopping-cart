@@ -1,0 +1,16 @@
+{
+  "name": "interactive-shopping-cart",
+  "version": "1.0.0",
+  "description": "jquery exercise",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/blanford-fox-2016/interactive-shopping-cart.git",
+    "type": "git"
+  },
+  "author": "Ahyana Rizky Pratama <ahyana.rizky@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.5"
+  }
+}
