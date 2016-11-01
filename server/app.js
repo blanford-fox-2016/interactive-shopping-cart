@@ -14,6 +14,8 @@ const routes_api_customers = require('./routes/api.customers');
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/shopping-cart')
 
+const cors = require('cors')
+
 const app = express();
 
 // view engine setup
@@ -27,6 +29,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors())
+
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 // routes
