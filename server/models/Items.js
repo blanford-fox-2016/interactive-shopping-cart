@@ -13,4 +13,4 @@ let itemSchema = new Schema({
 })
 
 
-module.exports = mongooose.model('items', itemSchema)
+module.exports = mongoose.model('items', itemSchema)

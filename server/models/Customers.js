@@ -12,4 +12,4 @@ let customersSchema = new Schema({
   phone     : Number
 })
 
-module.exports = customersSchema.model('customers', customersSchema)
+module.exports = mongoose.model('customers', customersSchema)
