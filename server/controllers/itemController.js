@@ -21,13 +21,12 @@ module.exports = {
     }).then(function(data){
       res.json(data)
     })
-
-  } // end of itemCreate
-  // itemDelete: function (req, res, next){
-  //   res.json("success");
-  // },
-  // itemUpdate: function (req,res,next){
-  //   res.json("success");
-  // }
+  }, // end of itemCreate
+  itemDelete: function (req, res, next){
+    res.json("success");
+  },
+  itemUpdate: function (req,res,next){
+    res.json("success");
+  }
 
 }

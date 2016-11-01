@@ -10,10 +10,10 @@ router.post('/customer', customerController.customerCreate);
 router.delete('/customer', customerController.customerDelete);
 
 /* route for item */
-// router.get('/item', controller.itemList);
-// router.post('/item', controller.itemCreate);
-// router.delete('/item', controller.itemDelete);
-// router.put('/item', controller.itemUpdate);
+router.get('/item', itemController.itemList);
+router.post('/item', itemController.itemCreate);
+router.delete('/item', itemController.itemDelete);
+router.put('/item', itemController.itemUpdate);
 
 /* route for cart */
 // router.get('/cart', controller.cartList);
