@@ -18,8 +18,8 @@ let createTableItem = () => {
             tableContent += '<td>' + data[i].description + '</td>';
             tableContent += '<td>' + data[i].price + '</td>';
             tableContent += '<td>' + data[i].stock + '</td>';
-            tableContent += `<td><a href="#" id="${data[i]._id}" class="btn btn-warning" role="button" rel="'${data[i]._id}'">Update</a></td>`;
-            tableContent += `<td><a href="#" id="${data[i]._id}" class="btn btn-danger" role="button" rel="'${data[i]._id}'">Delete</a></td>`;
+            tableContent += `<td><a href="#" id="${data[i]._id}" class="btn btn-warning" role="button" rel="${data[i]._id}">Update</a></td>`;
+            tableContent += `<td><a href="#" id="${data[i]._id}" class="btn btn-danger" role="button" rel="${data[i]._id}">Delete</a></td>`;
             tableContent += '</tr>';
         }
         $('#itemList table tbody').html(tableContent)
@@ -67,23 +67,23 @@ let updateItem = (event) => {
             console.log(err);
         } else {
             console.log(data);
-            $('input#inputitemCode').val(data.itemCode);
-            $('input#inputname').val(data.name);
-            $('input#inputdescription').val(data.description);
-            $('input#inputprice').val(data.price);
-            $('input#inputstock').val(data.stock);
+            $('input#inputitemCode').html(data.itemCode);
+            $('input#inputname').html(data.name);
+            $('input#inputdescription').html(data.description);
+            $('input#inputprice').html(data.price);
+            $('input#inputstock').html(data.stock);
         }
     })
 }
 
 let deleteItem = (event) => {
-    console.log($('td a.btn.btn-danger').attr('rel'));
+    console.log($(this).closest('a').attr('rel'))
     event.preventDefault();
-    var confirmation = confirm('Are you sure you want to delete this user?');
+    var confirmation = confirm('Are you sure you want to delete this item?');
     if (confirmation === true) {
         $.ajax({
             type: 'DELETE',
-            url: '/api/item/' + $('td a.btn.btn-danger').attr('rel')
+            url: '/api/item/' + $('a.btn.btn-danger').attr('rel')
         }).done(function(response) {
             console.log(response);
             createTableItem();
