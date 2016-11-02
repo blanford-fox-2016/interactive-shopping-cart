@@ -191,19 +191,31 @@ module.exports = {
     },
 
     createCart: function (req, res) {
-        var cart = new Cart({
+        console.log(req.body)
+        Cart.findOneAndUpdate({
+            memberId: req.body.memberId
+        }, {
             memberId: req.body.memberId,
             total: req.body.total,
-            transactionDate: req.body.transactionDate
-            // itemList: req.body.itemList
-        })
-        cart.save(function (err, cart) {
+            transactionDate: req.body.transactionDate,
+            $push: {
+                itemList: {
+                    itemCode: req.body.itemCode,
+                    qty: req.body.qty,
+                    price: req.body.price
+                }
+            }
+        }, {
+            new: true,
+            save: true,
+            upsert: true
+        }, function (err, cart) {
             if (err) {
                 throw err
             }
 
             res.json({
-                status: "Cart di tambah",
+                status: 'sukses',
                 cart: cart
             })
         })
@@ -243,9 +255,7 @@ module.exports = {
         Cart.findByIdAndUpdate(
             req.params.id, {
                 memberId: req.body.memberId,
-                total: req.body.description,
-                transactionDate: req.body.transactionDate,
-                itemList: req.body.itemList
+                total: req.body.total
             },
             function (err) {
                 console.log('updated!')

@@ -38,9 +38,15 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Item:</label>
             <div class="col-sm-10">
-                <select name="itemList" class="form-control" id="selectItem">
+                <select name="itemCode" class="form-control" id="selectItem">
 
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Price:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="price">
             </div>
         </div>
         <div class="form-group">
@@ -121,22 +127,23 @@
                 $.extend({}, data)
                 var cart = []
 
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
                     cart.push(`<tr id="rowCart${data[i]._id}">
-                                        <td>${i + 1}</td>
-                                        </td><td>${data[i].memberId}</td>
-                                        <td>${data[i].total}</td>
-                                        <td>${data[i].transactionDate}</td>
-                                        <td>
-                                            ${data[i].itemList}
-                                        </td>
-                                        <td>
-                                            <span>
-                                                <button id="buttonEditCart${data[i]._id}" class="btn btn-warning" onclick="editCart('${data[i]._id}')">Edit</button>
-                                                <button id="buttonDeleteCart${data[i]._id}" class="btn btn-danger" onclick="deleteCart('${data[i]._id}')">Delete</button>
-                                            </span>
-                                        </td>
-                                     </tr>`)
+                                <td>${i + 1}</td>
+                                </td><td>${data[i].memberId}</td>
+                                <td>${data[i].total}</td>
+                                <td>${data[i].transactionDate}</td>`)
+
+                    cart.push(`<td>`)
+                    for (let j = 0; j < data[i].itemList.length; j++) {
+                        cart.push(`${data[i].itemList[j].itemCode}, `)
+                    }
+                    cart.push(`</td>`)
+
+                    cart.push(`<td><span>
+                                <button id="buttonEditCart${data[i]._id}" class="btn btn-warning" onclick="editCart('${data[i]._id}')">Edit</button>
+                                <button id="buttonDeleteCart${data[i]._id}" class="btn btn-danger" onclick="deleteCart('${data[i]._id}')">Delete</button>
+                                </span></td></tr>`)
                 }
 
                 rowOfCart.append(cart.join(""))
@@ -149,11 +156,13 @@
         var memberId = $("select[name='memberId']").val()
         var total = $("input[name='total']").val()
         var transactionDate = $("input[name='transactionDate']").val()
-        var itemList = $("input[name='itemList']").val()
-        addCartFromAPI(memberId, total, transactionDate, itemList)
+        var itemCode = $("select[name='itemCode']").val()
+        var qty = $("input[name='qty']").val()
+        var price = $("input[name='price']").val()
+        addCartFromAPI(memberId, total, transactionDate, itemCode, qty, price)
     })
 
-    function addCartFromAPI(memberId, total, transactionDate, itemList) {
+    function addCartFromAPI(memberId, total, transactionDate, itemCode, qty, price) {
         $.ajax({
             url: "http://localhost:3000/api/cart/create",
             method: "post",
@@ -162,7 +171,10 @@
                 memberId: memberId,
                 total: total,
                 transactionDate: transactionDate,
-                itemList: itemList
+                itemCode: itemCode,
+                qty: qty,
+                price: price
+
             },
             success: function (cart) {
                 updateCreateCart(cart.cart)
@@ -171,13 +183,19 @@
     }
 
     function updateCreateCart(cart) {
+        console.log(cart)
         var no = $('tr').length
         var html = `<tr id="rowCart${cart._id}">
                         <td>${no}</td>
                         <td>${cart.memberId}</td>
                         <td>${cart.total}</td>
                         <td>${cart.transactionDate}</td>
-                        <td>${cart.itemList}</td>
+                        <td>`
+                        for(var i = 0; i<cart.itemList.length; i++) {
+                            cart.itemList[i].itemCode
+                        }
+                        `</td>
+
                         <td>
                             <span>
                                 <button id="buttonEditItem${cart._id}" class="btn btn-warning" onclick="editCart('${cart._id}')">Edit</button>
@@ -244,15 +262,19 @@
     }
 
     function getCart(cart) {
-        var memberId = `input[name=memberId]`
+        var memberId = `select[name=memberId]`
         var total = `input[name=total]`
         var transactionDate = `input[name=transactionDate]`
-        var itemList = `input[name=itemList]`
+        var itemList = `select[name=itemCode]`
+        var price = `input[name=price]`
+        var qty = `input[name=qty]`
 
         $("form").find(memberId).val(cart.memberId)
         $("form").find(total).val(cart.total)
-        $("form").find(transactionDate).val(cart.transactionDate)
-        $("form").find(itemList).val(cart.itemList)
+        $("form").find(transactionDate).attr('disabled', true)
+        $("form").find(itemList).attr('disabled', true)
+        $("form").find(price).attr('disabled', true)
+        $("form").find(qty).attr('disabled', true)
         $("form").find("button[name=createCart]").replaceWith(`<button type='submit' name='updateCart' class='btn btn-default'>Update</button>`)
 
         var temp = $("input[name='id']").val()
@@ -269,15 +291,13 @@
         e.preventDefault()
         updateCartFromAPI(
                 $("input[name='id']").val(),
-                $("input[name='memberId']").val(),
-                $("input[name='total']").val(),
-                $("input[name='transactionDate']").val(),
-                $("input[name='itemList']").val()
+                $("select[name='memberId']").val(),
+                $("input[name='total']").val()
         )
 
     });
 
-    function updateCartFromAPI(id, memberId, total, transactionDate, itemList) {
+    function updateCartFromAPI(id, memberId, total) {
         $.ajax({
             url: `http://localhost:3000/api/cart/update/${id}`,
             method: "put",
@@ -285,9 +305,7 @@
             data: {
                 id: id,
                 memberId: memberId,
-                total: total,
-                transactionDate: transactionDate,
-                itemList: itemList
+                total: total
             },
             success: function (data) {
                 console.log(data)
@@ -297,7 +315,6 @@
     }
 
     function updateUpdateCart(cart) {
-        console.log(cart)
         var html = `<tr id="rowItem${cart._id}">
                         <td>tar</td>
                         <td>${cart.memberId}</td>
@@ -316,8 +333,11 @@
         $("form").find("button[name=updateCart]").replaceWith("<button type='submit' name='createCart' class='btn btn-default'>Submit</button>")
         $("input[name='memberId']").val("")
         $("input[name='total']").val("")
-        $("input[name='transactionDate']").val("")
-        $("input[name='itemList']").val("")
+        $("input[name='transactionDate']").val("").attr('disabled', false)
+        $("select[name='itemList']").attr('disabled', false)
+        $("input[name='price']").val("").attr('disabled', false)
+        $("input[name='qty']").val("").attr('disabled', false)
+
     }
 
 

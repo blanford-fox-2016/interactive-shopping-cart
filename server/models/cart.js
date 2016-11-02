@@ -5,7 +5,13 @@ var cartSchema = new mongoose.Schema({
     memberId: String,
     total: Number,
     transactionDate: Date,
-    itemList: []
+    itemList: [
+        {
+            itemCode: String,
+            qty: Number,
+            price: Number
+        }
+    ]
 
 });
 
