@@ -20,6 +20,7 @@
     <div class="row">
       <!-- kotak kosong -->
       <div class="col-sm-4">
+
           <div class="form-group">
             <label for="memberId">member ID:</label>
             <input type="text" name="memberId" class="form-control" id="memberID">
@@ -44,8 +45,10 @@
             <label for="phone">Phone Number:</label>
             <input type="text" name="phone" class="form-control" id="phone">
           </div>
-          <input type="submit" class="btn btn-success" value="add new customer" onclick="btnAddCustomer()">
+          <input type="submit" class="btn btn-success" value="add new customer" onclick="btnAddCustomer()" id="addNewCustomer">
+          <button type="button" class="btn btn-warning" id="updateButton" onclick="updateCustomer()">update customer</button>
       </div>
+
       <!-- isi form -->
       <div class="col-sm-4">
 
@@ -76,6 +79,7 @@
 
     function btnAddCustomer(){
       $(document).ready(function(){
+
         dataCustomer = {
           memberId : $("#memberID").val(),
           name : $("#name").val(),
@@ -83,11 +87,88 @@
           zip : $("#zip").val(),
           phone : $("#phone").val()
         }
+        console.log(typeof(dataCustomer));
+        console.log(typeof(JSON.stringify(dataCustomer)));
+        console.log(dataCustomer);
+        console.log("hallo");
+        console.log(JSON.stringify(dataCustomer));
         addCustomer(JSON.stringify(dataCustomer))
 
       })
     }
 
+    /* update customer */
+    updateCustomer
+    function updateCustomer(){
+
+
+      data = {
+        memberId : $("#memberID").val(),
+        name : $("#name").val(),
+        address : $("#address").val(),
+        zip : $("#zip").val(),
+        phone : $("#phone").val()
+      }
+
+      $.ajax({
+        url: "http://localhost:3000/api/customer",
+        method: 'put',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+          data : JSON.stringify(data)
+        },
+        success: function(data) {
+          var new_row = `<tr id="data${data.memberId}">
+          <td>${data.memberId}</td>
+          <td>${data.name}</td>
+          <td>${data.address}</td>
+          <td>${data.zip}</td>
+          <td>${data.phone}</td>
+          <td><button type="button" class="btn btn-warning" onclick="passingDataToInput('${data.memberId}')">Edit</button></td>
+          <td><button type="button" class="btn btn-danger" onclick="deleteCustomer( '${data.memberId}' )">Delete</button></td>
+          </tr>`
+          $(`#data${data.memberId}`).replaceWith(new_row)
+          resetInput()
+          $('#addNewCustomer').show()
+          $('#updateButton').hide()
+        }
+      })
+    }
+
+    /* passing data update */
+    function passingDataToInput(id){
+      alert(id);
+      $.ajax({
+        url: "http://localhost:3000/api/customer/update",
+        method: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+          id
+        },
+        success: function(data) {
+          $('#memberID').val(data.memberId);
+          $("#name").val(data.name);
+          $("#address").val(data.address);
+          $("#zip").val(data.zip);
+          $("#phone").val(data.phone);
+          $("#addNewCustomer").hide();
+          // document.getElementById("updateButton").style.display='block';
+          $('#updateButton').show()
+
+        }
+      })
+    }
+
+    /* reset input */
+    function resetInput(){
+      $("#memberID").val("")
+      $("#name").val("")
+      $("#address").val("")
+      $("#zip").val("")
+      $("#phone").val("")
+    }
+
+    /* add customer */
     function addCustomer(dataCustomer){
       $.ajax({
         url: "http://localhost:3000/api/customer",
@@ -97,20 +178,42 @@
           data : dataCustomer
         },
         success: function(data) {
-          console.log(data)
-          let resultHTML = `<tr>
-          <td>${data.memberId}</0td>
+          console.log("berhasil add")
+          let resultHTML = `<tr id="data${data.memberId}">
+          <td>${data.memberId}</td>
           <td>${data.name}</td>
           <td>${data.address}</td>
           <td>${data.zip}</td>
           <td>${data.phone}</td>
+          <td><button type="button" class="btn btn-warning" onclick="passingDataToInput('${data.memberId}')">Edit</button></td>
+          <td><button type="button" class="btn btn-danger" onclick="deleteCustomer( '${data.memberId}' )">Delete</button></td>
           </tr>`
-          $("#listOfCustomers").append(resultHTML)
+          $("#listOfCustomers").append(resultHTML);
+          resetInput();
         }
       })
     }
 
+    /* fungsi delete */
+    function deleteCustomer(id){
+      $.ajax({
+        url: "http://localhost:3000/api/customer",
+        method: 'delete',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+          id
+        },
+        success: function(data) {
+          console.log("hapus " + data)
+          $( `#data${data}` ).remove();
+        }
+      })
+    }
+
+    /* fungsi utama */
     $( document ).ready(function() {
+      $('#updateButton').hide()
+
       $.ajax({
         url:  "http://localhost:3000/api/customer",
         method: 'get',
@@ -121,12 +224,14 @@
           console.log(data)
           var dataHTML
           for(var i = 0; i < data.length; i++){
-            dataHTML += `<tr>
+            dataHTML += `<tr id="data${data[i].memberId}">
             <td>${data[i].memberId}</td>
             <td>${data[i].name}</td>
             <td>${data[i].address}</td>
             <td>${data[i].zip}</td>
             <td>${data[i].phone}</td>
+            <td><button type="button" class="btn btn-warning" onclick="passingDataToInput('${data[i].memberId}')">Edit</button></td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteCustomer( '${data[i].memberId}' )"">Delete</button></td>
             </tr>`
           }
           $('#listOfCustomers').append(dataHTML)
@@ -139,5 +244,6 @@
 
 
     </script>
+
   </body>
 </html>

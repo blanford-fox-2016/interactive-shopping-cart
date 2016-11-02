@@ -42,14 +42,18 @@ module.exports = {
     })
   },
   customerUpdate: function (req,res,next){
-    var data = req.body
-    console.log(typeof(req.body));
-    // User.findOneAndUpdate({ memberId: id }, { username: 'starlord88' }, function(err, user) {
-    //   if (err) throw err;
-    //
-    //   // we have the updated user returned to us
-    //   console.log(user);
-    // });
+    console.log();
+    var data = JSON.parse(req.body.data)
+
+    customer.findOneAndUpdate({ memberId: data.memberId }, { name: data.name, address: data.address, zip: data.zip, phone: data.phone }, function(err, data) {
+      if (err) throw err;
+      // we have the updated user returned to us
+      customer.findById(data._id, (err, data_updated) => {
+
+        console.log(data_updated);
+        res.json(data_updated)
+      })
+    });
   }
 
 }
