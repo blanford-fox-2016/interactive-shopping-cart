@@ -99,7 +99,7 @@ let submitDeleteButton = (id) => {
 }
 
 let submitButton = () => {
-  $('#btn_add_item').on('click', () => {
+  $('#btn_add_item').on('click', (e) => {
     e.preventDefault()
     let new_data = {
       itemCode    : $('#itemCode').val(),
