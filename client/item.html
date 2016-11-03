@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>List Item</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+    <div class="row">
+      <!-- kotak kosong -->
+      <div class="col-sm-4">
+          <div class="form-group">
+            <label for="itemCode">Item Code:</label>
+            <input type="text" name="itemCode" class="form-control" id="itemCode">
+          </div>
+
+          <div class="form-group">
+            <label for="name">Item Name:</label>
+            <input type="text" name="name" class="form-control" id="name">
+          </div>
+
+          <div class="form-group">
+            <label for="Description">Item Description:</label>
+            <input type="text" name="Description" class="form-control" id="Description">
+          </div>
+
+          <div class="form-group">
+            <label for="price">Item Price:</label>
+            <input type="text" name="price" class="form-control" id="price">
+          </div>
+
+          <div class="form-group">
+            <label for="stock">Item Stock:</label>
+            <input type="text" name="stock" class="form-control" id="stock">
+          </div>
+          <input type="submit" class="btn btn-success" value="add new Item" onclick="btnAddItem()">
+      </div>
+      <!-- isi form -->
+      <div class="col-sm-4">
+
+      </div>
+      <!-- kotak kosong -->
+      <div class="col-sm-4"></div>
+
+    </div>
+
+
+      <h1> List of Items </h1>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>itemCode</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>price</th>
+            <th>stock</th>
+          </tr>
+        </thead>
+        <tbody id="listOfItems">
+        </tbody>
+      </table>
+
+    </div>
+    <script type="text/javascript">
+
+    function btnAddItem(){
+      $(document).ready(function(){
+        dataItem = {
+          itemCode : $("#itemCode").val(),
+          name : $("#name").val(),
+          Description : $("#Description").val(),
+          price : $("#price").val(),
+          stock : $("#stock").val()
+        }
+        addItem(JSON.stringify(dataItem))
+
+      })
+    }
+
+    function addItem(dataItem){
+      $.ajax({
+        url: "http://localhost:3000/api/Item",
+        method: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+          data : dataItem
+        },
+        success: function(data) {
+          console.log(data)
+          let resultHTML = `<tr>
+          <td>${data.itemCode}</0td>
+          <td>${data.name}</td>
+          <td>${data.Description}</td>
+          <td>${data.price}</td>
+          <td>${data.stock}</td>
+          </tr>`
+          $("#listOfItems").append(resultHTML)
+        }
+      })
+    }
+
+    $( document ).ready(function() {
+      $.ajax({
+        url:  "http://localhost:3000/api/Item",
+        method: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+        },
+        success: function(data) {
+          console.log(data)
+          var dataHTML
+          for(var i = 0; i < data.length; i++){
+            dataHTML += `<tr>
+            <td>${data[i].itemCode}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].description}</td>
+            <td>${data[i].price}</td>
+            <td>${data[i].stock}</td>
+            </tr>`
+          }
+          $('#listOfItems').append(dataHTML)
+        }
+      })
+    }) // main function, the main function is always start when browser open
+
+
+
+
+
+    </script>
+  </body>
+</html>
