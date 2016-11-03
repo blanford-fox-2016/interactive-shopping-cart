@@ -70,7 +70,6 @@
 <div class="container">
     <table class="table" id="rowOfItems">
         <tr>
-            <td>No.</td>
             <td>Item Code</td>
             <td>Name</td>
             <td>Description</td>
@@ -97,7 +96,6 @@
 
                 for (var i = 0; i < data.length; i++) {
                     items.push(`<tr id="rowItem${data[i]._id}">
-                                        <td>${i + 1}</td>
                                         <td>${data[i].itemCode}
                                         </td><td>${data[i].name}</td>
                                         <td>${data[i].description}</td>
@@ -149,7 +147,6 @@
     function updateCreateItem(item) {
         var no = $('tr').length
         var html = `<tr id="rowItem${item._id}">
-                        <td>${no}</td>
                         <td>${item.itemCode}</td>
                         <td>${item.name}</td>
                         <td>${item.description}</td>
@@ -282,7 +279,6 @@
     function updateUpdateItem(item) {
         console.log(item)
         var html = `<tr id="rowItem${item._id}">
-                        <td>tar</td>
                         <td>${item.itemCode}</td>
                         <td>${item.name}</td>
                         <td>${item.description}</td>
