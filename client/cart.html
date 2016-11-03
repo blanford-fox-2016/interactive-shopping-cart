@@ -46,12 +46,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2">Transaction Date:</label>
-            <div class="col-sm-10">
-                <input type="date" class="form-control" name="transactionDate">
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-sm-2">Item:</label>
             <div class="col-sm-10">
                 <select name="itemCode" class="form-control" id="selectItem">
@@ -82,10 +76,8 @@
 <div class="container">
     <table class="table" id="rowOfCart">
         <tr>
-            <td>No.</td>
             <td>Member ID</td>
             <td>Total</td>
-            <td>Transaction Date</td>
             <td>Item List</td>
             <td>Action</td>
         </tr>
@@ -145,7 +137,6 @@
 
                 for (let i = 0; i < data.length; i++) {
                     cart.push(`<tr id="rowCart${data[i]._id}">
-                                <td>${i + 1}</td>
                                 </td><td>${data[i].memberId}</td>
                                 <td>${data[i].total}</td>
                                 <td>${data[i].transactionDate}</td>`)
@@ -157,7 +148,6 @@
                     cart.push(`</td>`)
 
                     cart.push(`<td><span>
-                                <button id="buttonEditCart${data[i]._id}" class="btn btn-warning" onclick="editCart('${data[i]._id}')">Edit</button>
                                 <button id="buttonDeleteCart${data[i]._id}" class="btn btn-danger" onclick="deleteCart('${data[i]._id}')">Delete</button>
                                 </span></td></tr>`)
                 }
@@ -186,14 +176,19 @@
             data: {
                 memberId: memberId,
                 total: total,
-                transactionDate: transactionDate,
+                transactionDate: Date.now(),
                 itemCode: itemCode,
                 qty: qty,
                 price: price
 
             },
             success: function (cart) {
-                updateCreateCart(cart.cart)
+                if (cart.cart.itemList.length == 1) {
+                    updateCreateCart(cart.cart)
+                }
+                else {
+                    updateUpdateCart(cart.cart)
+                }
             }
         })
     }
@@ -202,19 +197,17 @@
         console.log(cart)
         var no = $('tr').length
         var html = `<tr id="rowCart${cart._id}">
-                        <td>${no}</td>
                         <td>${cart.memberId}</td>
                         <td>${cart.total}</td>
                         <td>${cart.transactionDate}</td>
                         <td>`
                         for(var i = 0; i<cart.itemList.length; i++) {
-                         html +=  `<td>${cart.itemList[i].itemCode}</td>`
+                         html +=  `${cart.itemList[i].itemCode}, `
                         }
             html +=  `</td>
 
                         <td>
                             <span>
-                                <button id="buttonEditItem${cart._id}" class="btn btn-warning" onclick="editCart('${cart._id}')">Edit</button>
                                 <button id="buttonDeleteItem${cart._id}" class="btn btn-danger" onclick="deleteCart('${cart._id}')">Delete</button>
                             </span>
                         </td>
@@ -223,8 +216,8 @@
         $("tbody:last").append(html)
         $("input[name='memberId']").val("")
         $("input[name='total']").val("")
-        $("input[name='transactionDate']").val("")
-        $("input[name='itemList']").val("")
+        $("input[name='price']").val("")
+        $("input[name='qty']").val("")
     }
 
     function deleteCart(id) {
@@ -255,7 +248,6 @@
         $("tbody").find(`#rowCart${id}`).remove()
         $("input[name='memberId']").val("")
         $("input[name='total']").val("")
-        $("input[name='transactionDate']").val("")
         $("input[name='itemList']").val("")
     }
 
@@ -287,7 +279,6 @@
 
         $("form").find(memberId).val(cart.memberId)
         $("form").find(total).val(cart.total)
-        $("form").find(transactionDate).attr('disabled', true)
         $("form").find(itemList).attr('disabled', true)
         $("form").find(price).attr('disabled', true)
         $("form").find(qty).attr('disabled', true)
@@ -331,16 +322,19 @@
     }
 
     function updateUpdateCart(cart) {
-        var html = `<tr id="rowItem${cart._id}">
-                        <td>tar</td>
+        var html = `<tr id="rowCart${cart._id}">
                         <td>${cart.memberId}</td>
                         <td>${cart.total}</td>
                         <td>${cart.transactionDate}</td>
-                        <td>${cart.itemList}</td>
+                        <td>`
+        for(var i = 0; i<cart.itemList.length; i++) {
+            html +=  `${cart.itemList[i].itemCode}, `
+        }
+        html +=  `</td>
+
                         <td>
                             <span>
-                                <button id="buttonEditCart${cart._id}" class="btn btn-warning" onclick="editCart('${cart._id}')">Edit</button>
-                                <button id="buttonDeleteCart${cart._id}" class="btn btn-danger" onclick="deleteCart('${cart._id}')">Delete</button>
+                                <button id="buttonDeleteItem${cart._id}" class="btn btn-danger" onclick="deleteCart('${cart._id}')">Delete</button>
                             </span>
                         </td>
                     </tr>`
