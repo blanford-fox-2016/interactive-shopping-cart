@@ -70,7 +70,6 @@
 <div class="container">
     <table class="table" id="rowOfCustomers">
         <tr>
-            <td>No.</td>
             <td>Name</td>
             <td>Member ID</td>
             <td>Address</td>
@@ -78,7 +77,6 @@
             <td>Phone</td>
             <td>Action</td>
         </tr>
-
     </table>
 </div>
 
@@ -97,7 +95,6 @@
 
                 for (var i = 0; i < data.length; i++) {
                     customers.push(`<tr id="rowCustomer${data[i]._id}">
-                                        <td>${i + 1}</td>
                                         <td>${data[i].name}
                                         </td><td>${data[i].memberId}</td>
                                         <td>${data[i].address}</td><td>${data[i].zip}</td>
@@ -148,7 +145,6 @@
     function updateCreateCustomer(customer) {
         var no = $('tr').length
         var html = `<tr id="rowCustomer${customer._id}">
-                        <td>${no}</td>
                         <td>${customer.name}</td>
                         <td>${customer.memberId}</td>
                         <td>${customer.address}</td>
@@ -281,7 +277,6 @@
     function updateUpdateCustomer(customer) {
         console.log(customer)
         var html = `<tr id="rowCustomer${customer._id}">
-                        <td>tar</td>
                         <td>${customer.name}</td>
                         <td>${customer.memberId}</td>
                         <td>${customer.address}</td>
