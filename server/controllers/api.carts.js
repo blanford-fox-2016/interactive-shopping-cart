@@ -14,6 +14,7 @@ let allCarts = (req, res, next) => {
 }
 
 let addCart = (req, res, next) => {
+  console.log(req.body.itemList);
   Carts.create({
     memberId          : req.body.memberId,
     total             : req.body.total,
