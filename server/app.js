@@ -5,7 +5,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 const routes = require('./routes/index');
 const api = require('./routes/api');
 
@@ -21,6 +21,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
