@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <title>Interactive Shopping Cart</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container">
+      <!-- navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/index.html">Items</a></li>
+            <li><a href="/carts.html">Carts</a></li>
+            <li><a href="/customers.html">Customers</a></li>
+          </ul>
+        </div>
+      </nav>
+      <!-- end navbar -->
+
+      <!-- form add item -->
+      <form class="form-horizontal" method="post" id="form_new_cart">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="memberId">Member's ID</label>
+          <div class="col-sm-10">
+            <select name="memberId" id="memberId" class="form-control"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="total">Total</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="total" name="total" placeholder="Enter Total here">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="transaction_date">Transaction Date</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" id="transaction_date" name="transaction_date">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="price">Item's List</label>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10">
+            <table id="itemListTable" class="table">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>Item Code</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-success" id="btn_add_cart">Submit</button>
+          </div>
+        </div>
+      </form>
+      <!-- form add item -->
+
+      <!-- table list item -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Item's Code</th>
+            <th>Item's Name</th>
+            <th>Description</th>
+            <th>Item's Price</th>
+            <th>Item's Stock</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="body_table_items">
+
+        </tbody>
+      </table>
+      <!-- end table list item -->
+    </div>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- script.js -->
+    <script src="/script/carts.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
