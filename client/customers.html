@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <title>Interactive Shopping Cart</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container">
+      <!-- navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/index.html">Items</a></li>
+            <li><a href="/carts.html">Carts</a></li>
+            <li><a href="/customers.html">Customers</a></li>
+          </ul>
+        </div>
+      </nav>
+      <!-- end navbar -->
+
+      <!-- form add item -->
+      <form class="form-horizontal" method="post" id="form_new_item">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Customer's Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name Here">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="memberId">Member ID</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="memberId" name="memberId" placeholder="Enter Member ID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="address">Address</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="address" name="address" placeholder="Enter Address"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="zip">ZIP Code</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="zip" name="zip" placeholder="Enter ZIP Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="phone">Phone</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Phone Number">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-info" id="btn_update_cust">Update</button>
+            <button type="button" class="btn btn-success" id="btn_add_cust">Submit</button>
+          </div>
+        </div>
+      </form>
+      <!-- form add item -->
+
+      <!-- table list item -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Customer's Name</th>
+            <th>Member ID</th>
+            <th>Address</th>
+            <th>ZIP Code</th>
+            <th>Phone</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="body_table_items">
+
+        </tbody>
+      </table>
+      <!-- end table list item -->
+    </div>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- script.js -->
+    <script src="/script/customers.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
