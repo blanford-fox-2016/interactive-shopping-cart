@@ -19,26 +19,20 @@
             <a class="navbar-brand" href="#">WebSiteName</a>
           </div>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/index.html">Items</a></li>
-            <li><a href="/carts.html">Carts</a></li>
+            <li><a href="/index.html">Items</a></li>
+            <li class="active"><a href="/carts.html">Carts</a></li>
             <li><a href="/customers.html">Customers</a></li>
           </ul>
         </div>
       </nav>
       <!-- end navbar -->
 
-      <!-- form add item -->
+      <!-- form add cart -->
       <form class="form-horizontal" method="post" id="form_new_cart">
         <div class="form-group">
           <label class="control-label col-sm-2" for="memberId">Member's ID</label>
           <div class="col-sm-10">
             <select name="memberId" id="memberId" class="form-control"></select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="total">Total</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="total" name="total" placeholder="Enter Total here">
           </div>
         </div>
         <div class="form-group">
@@ -48,10 +42,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="price">Item's List</label>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-2"></div>
+          <label class="control-label col-sm-2" for="itemList">Item's List</label>
           <div class="col-sm-10">
             <table id="itemListTable" class="table">
               <thead class="thead-inverse">
@@ -64,8 +55,17 @@
                   <th>Qty</th>
                 </tr>
               </thead>
+              <tbody id="itemListContent">
+              </tbody>
             </table>
           </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2" style="text-align: right">Total</label>
+          <label class="col-sm-10" id="total">0 $</label>
+          <!-- <div class="col-sm-10"> -->
+            <!-- <input type="text" class="form-control" id="total" name="total" placeholder="Enter Total here"> -->
+          <!-- </div> -->
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
@@ -73,25 +73,25 @@
           </div>
         </div>
       </form>
-      <!-- form add item -->
+      <!-- form add cart -->
 
-      <!-- table list item -->
+      <!-- table list cart -->
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Item's Code</th>
-            <th>Item's Name</th>
-            <th>Description</th>
-            <th>Item's Price</th>
+            <th>Member's ID</th>
+            <th>Total</th>
+            <th>Transaction Date</th>
+            <th>Item's List</th>
             <th>Item's Stock</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="body_table_items">
+        <tbody id="body_table_cart">
 
         </tbody>
       </table>
-      <!-- end table list item -->
+      <!-- end table list cart -->
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

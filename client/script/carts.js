@@ -40,54 +40,60 @@ $(document).ready(() => {
       let HTML_items = ''
       for (var i = 0; i < all_items.length; i++) {
         HTML_items += `
-          <tr>
+          <tr id="itemList">
             <td>${all_items[i].itemCode}</td>
             <td>${all_items[i].name}</td>
             <td>${all_items[i].description}</td>
             <td>${all_items[i].price}</td>
             <td>${all_items[i].stock}</td>
-            <td class="col-xs-1">
-              <input list="qty" id="qty">
-                <datalist id="qty">
-                <option value="1">
-                <option value="2">
-                <option value="3">
-                <option value="4">
-                <option value="5">
-                <option value="6">
-                <option value="7">
-                <option value="8">
-                <option value="9">
-                <option value="10">
-              </datalist>
+            <td>
+              <select id="qty">
+                  <option value="0">0</option>
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+            </td>
+            <td>
+              <input type="hidden" id="id" value="${all_items[i]._id}">
             </td>
           </tr>
         `
       }
 
-      $('#itemListTable').append(HTML_items)
+      $('#itemListContent').append(HTML_items)
     }
   })
 
   $('#btn_add_cart').on('click', (e) => {
     e.preventDefault()
-    let new_cart = {
-      memberId    : $('#memberId').val(),
-      total        : $('#total').val(),
-      transaction_date : $('#transaction_date').val(),
-      itemList       : $('#qty').val()
-    }
+    let checkout = []
+    let memberId = $('#memberId').val()
+    let transaction_date = $('#transaction_date').val()
+    // console.log(memberId)
+    // console.log(transaction_date);
+    $('tr#itemList').each((i, el)   => {
+      // console.log($(el).find('#id').val());
+      // console.log($(el).find('select').val());
+      if($(el).find('#id').val() != undefined && $(el).find('select').val() != 0){
+        checkout.push({
+          id : $(el).find('#id').val(),
+          qty : $(el).find('select').val()
+        })
+      }
+    })
 
-    console.log(new_cart);
-    // $.ajax({
-    //   url         : 'http://localhost:3000/api/items',
-    //   type        : 'POST',
-    //   dataType    : 'json',
-    //   contentType : 'application/x-www-form-urlencoded',
-    //   data        : new_cart,
-    //   success     : (new_cart_server) => {
-    //   }
-    // })
+    // $('#form_itemList').hide()
+    // $('#form_new_cart, #list_cart').show()
+
+    console.log(checkout);
   })
 
 })
