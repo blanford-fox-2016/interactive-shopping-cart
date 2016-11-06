@@ -95,6 +95,17 @@ module.exports = {
             }
         })
     },
+    findEditCust: function(req, res, next) {
+        customer.find({
+            _id: req.params.id
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
     editCustomer: function(req, res, next) {
         customer.update({
             _id: req.params.id

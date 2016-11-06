@@ -104,6 +104,74 @@ function addItem() {
 
 }
 
+function formEditItem(parameter) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', `http://localhost:3000/api/item/${parameter}`);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText)
+            document.getElementById('input_itemCode').value = data[0].itemCode
+            document.getElementById('input_name').value = data[0].name
+            document.getElementById('input_description').value = data[0].description
+            document.getElementById('input_price').value = data[0].price
+            document.getElementById('input_stock').value = data[0].stock
+            $("#button-replace-item").html(`<button type='submit' class='btn btn-warning' onclick=putItem('${data[0]._id}')>Update</button>`)
+        } else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+
+}
+
+function putItem(parameter) {
+    let item_code = document.getElementById('input_itemCode').value
+    let item_name = document.getElementById('input_name').value
+    let item_desc = document.getElementById('input_description').value
+    let item_price = document.getElementById('input_price').value
+    let item_stock = document.getElementById('input_stock').value
+    if (item_code != "" && item_name != "" && item_desc != "" && item_price != "" && item_stock != "") {
+        $.ajax({
+            url: `http://localhost:3000/api/item/${parameter}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: parameter,
+                itemCode: item_code,
+                name: item_name,
+                description: item_desc,
+                price: item_price,
+                stock: item_stock
+            },
+            success: function(data) {
+                alert('Updated Successfully')
+                loadTableItem()
+            }
+        })
+    } else {
+        alert('Please Fill All Fields')
+    }
+}
+
+function deleteItem(parameter) {
+    var del = confirm("Are you sure want to delete this item?")
+    if (del) {
+        $.ajax({
+            url: `http://localhost:3000/api/item/${parameter}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: parameter
+            },
+            success: function() {
+                alert('Deleted Successfully')
+                loadTableItem()
+            }
+        })
+    }
+
+}
+
 function loadTableCustomer() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:3000/api/customer');
@@ -205,18 +273,19 @@ function addCustomer() {
 
 }
 
-function formEditItem(parameter) {
+function formEditCust(parameter) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:3000/api/item/${parameter}`);
+    xhr.open('GET', `http://localhost:3000/api/customer/${parameter}`);
     xhr.onload = function() {
         if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText)
-            document.getElementById('input_itemCode').value = data[0].itemCode
-            document.getElementById('input_name').value = data[0].name
-            document.getElementById('input_description').value = data[0].description
-            document.getElementById('input_price').value = data[0].price
-            document.getElementById('input_stock').value = data[0].stock
-            $("#button-replace-item").html(`<button type='submit' class='btn btn-warning' onclick=putItem('${data[0]._id}')>Update</button>`)
+            console.log(data);
+            document.getElementById('input_memberId').value = data[0].memberId
+            document.getElementById('input_customerName').value = data[0].name
+            document.getElementById('input_address').value = data[0].address
+            document.getElementById('input_zip').value = data[0].zip
+            document.getElementById('input_phone').value = data[0].phone
+            $("#button-replace-cust").html(`<button type='submit' class='btn btn-warning' onclick=putCust('${data[0]._id}')>Update</button>`)
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
@@ -225,33 +294,53 @@ function formEditItem(parameter) {
 
 }
 
-function putItem(parameter) {
-    let item_code = document.getElementById('input_itemCode').value
-    let item_name = document.getElementById('input_name').value
-    let item_desc = document.getElementById('input_description').value
-    let item_price = document.getElementById('input_price').value
-    let item_stock = document.getElementById('input_stock').value
-    if (item_code != "" && item_name != "" && item_desc != "" && item_price != "" && item_stock != "") {
+function putCust(parameter) {
+    let cust_id = document.getElementById('input_memberId').value
+    let cust_name = document.getElementById('input_customerName').value
+    let cust_address = document.getElementById('input_address').value
+    let cust_zip = document.getElementById('input_zip').value
+    let cust_phone = document.getElementById('input_phone').value
+
+    if (cust_id != "" && cust_name != "" && cust_address != "" && cust_zip != "" && cust_phone != "") {
         $.ajax({
-            url: `http://localhost:3000/api/item/${parameter}`,
+            url: `http://localhost:3000/api/customer/${parameter}`,
             method: "put",
             contentType: 'application/x-www-form-urlencoded',
             data: {
                 id: parameter,
-                itemCode: item_code,
-                name: item_name,
-                description: item_desc,
-                price: item_price,
-                stock: item_stock
+                memberId: cust_id,
+                name: cust_name,
+                address: cust_address,
+                zip: cust_zip,
+                phone: cust_phone
             },
             success: function(data) {
-                console.log(data)
-                alert('Success')
+                alert('Updated Successfully')
+                loadTableCustomer()
             }
         })
     } else {
         alert('Please Fill All Fields')
     }
+}
+
+function deleteCust(parameter) {
+    var del = confirm("Are you sure want to delete this item?")
+    if (del) {
+        $.ajax({
+            url: `http://localhost:3000/api/customer/${parameter}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: parameter
+            },
+            success: function() {
+                alert('Deleted Successfully')
+                loadTableCustomer()
+            }
+        })
+    }
+
 }
 
 //comment

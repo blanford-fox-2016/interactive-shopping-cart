@@ -10,6 +10,7 @@ router.delete('/item/:id', controller.removeItem)
 
 router.get('/customer', controller.viewCustomers)
 router.post('/customer', controller.addCustomer)
+router.get('/customer/:id', controller.findEditCust)
 router.put('/customer/:id', controller.editCustomer)
 router.delete('/customer/:id', controller.removeCustomer)
 
