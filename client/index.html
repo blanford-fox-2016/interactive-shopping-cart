@@ -3,14 +3,14 @@
   <head>
     <title>Simple Tamvan Shopping Cart</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
   </head>
   <body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Twatt!</a>
+          <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Shopping-Cart</a>
         </div>
         <div id="bs-example-navbar-collapse-2" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -28,6 +28,9 @@
       <div class="row">
         <h3 class="pull-left">Item List</h3>
         <h3 class="pull-right">
+          <!-- <button id="reload" name="reload" class="btn btn-default" type="button" data-toggle="collapse" data-target="#reloadItem" aria-expanded="false" aria-controls="reloadItem">
+            <i class="glyphicon glyphicon-refresh"></i> Reload Item
+          </button> -->
           <button name="add" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             <i class="glyphicon glyphicon-plus"></i> Add New Item
           </button>
@@ -35,7 +38,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="collapse" id="collapseExample">
-        <form action="index.html" method="post" class="col-lg-12">
+        <form class="col-lg-12" id="inputItem">
           <div class="form-group">
             <label class="control-label" for="ItemCode">Item Code</label>
             <input class="form-control" id="ItemCode" type="text" placeholder="Enter the item code">
@@ -54,38 +57,16 @@
           </div>
           <div class="form-group">
             <label class="control-label" for="ItemDescription">Description</label>
-            <textarea class="form-control" id="ItemDescription" type="number" placeholder="Enter the item description"></textarea>
+            <textarea class="form-control" id="ItemDescription" placeholder="Enter the item description"></textarea>
           </div>
           <div class="form-group">
-            <button type="button" name="submit" class="btn btn-primary">Submit</button>
+            <button id="submitItem" type="button" name="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
-      <!-- ITEM LIST -->
-      <div id="items">
-        <!-- All items data belong here -->
-        <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <!-- <img src="..." alt="..."> -->
-              <div class="caption">
-                <h3>Item Name</h3>
-                <p>This is a good item</p>
-                <p class="text-center">
-                  <a href="#" class="btn btn-primary" role="button">
-                    <i class="glyphicon glyphicon-eye-open"></i> Detail
-                  </a>
-                  <a href="#" class="btn btn-success" role="button">
-                    <i class="glyphicon glyphicon-edit"></i> Detail
-                  </a>
-                  <a href="#" class="btn btn-danger" role="button">
-                    <i class="glyphicon glyphicon-trash"></i> Delete
-                  </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <!-- All items data belong here -->
+      <div class="row" id="items">
+        <!-- All Items data belongs here -->
       </div>
       <!-- ITEM LIST -->
     </div>
@@ -94,8 +75,179 @@
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script type="text/javascript">
+  $(document).ready(function() {
+    //NEW DATA ITEM
+    $("#submitItem").click(function() {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/api/item",
+        data: {
+          itemCode: $("#ItemCode").val(),
+          name: $("#ItemName").val(),
+          description: $("#ItemDescription").val(),
+          price: $("#ItemPrice").val(),
+          stock: $("#ItemStock").val()
+        },
+        dataType: "json",
+        success: function appendnew(data) {
+          var newHTML = '';
+          newHTML += `<div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>${data.name}</h3>
+                <p>${data.description}</p>
+                <p class="text-center">
+                <button type="button" class="btn btn-primary" role="button"  data-toggle="modal" data-target="#detailmodal${data._id}">
+                  <i class="glyphicon glyphicon-eye-open"></i> Detail
+                </button>
+                <a href="#" class="btn btn-success" role="button">
+                  <i class="glyphicon glyphicon-edit"></i> Edit
+                </a>
+                <button type="button" class="btn btn-danger" role="button"  data-toggle="modal" data-target="#deletemodal${data._id}">
+                  <i class="glyphicon glyphicon-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
 
+          <!-- Modal -->
+          <div class="modal fade" id="deletemodal${data._id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Delete Item</h4>
+                </div>
+                <div class="modal-body">
+                  Are you sure want to delete this item (${data.name})?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="detailmodal${data._id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Detail Item ${data.itemCode}</h4>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    Item Code : ${data.itemCode} <br>
+                    Name : ${data.name} <br>
+                    description: ${data.description} <br>
+                    Price : ${data.price} <br>
+                    Stock : ${data.stock}
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-success">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          `;
+          $( '#inputItem' ).each(function(){
+              this.reset();
+          });
+          $("#items").append(newHTML);
+        }
+      });
+    });
+
+    //GET ALL DATA ITEM
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:3000/api/item",
+      dataType: "json",
+      contentType: 'application/x-www-form-urlencoded',
+      success: function(data) {
+        var dataHTML = '';
+        for (var i = 0; i < data.length; i++) {
+          dataHTML += `<div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>${data[i].name}</h3>
+                <p>${data[i].description}</p>
+                <p class="text-center">
+                  <button type="button" class="btn btn-primary" role="button"  data-toggle="modal" data-target="#detailmodal${data[i]._id}">
+                    <i class="glyphicon glyphicon-eye-open"></i> Detail
+                  </button>
+                  <a href="#" class="btn btn-success" role="button">
+                    <i class="glyphicon glyphicon-edit"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-danger" role="button"  data-toggle="modal" data-target="#deletemodal${data[i]._id}">
+                    <i class="glyphicon glyphicon-trash"></i> Delete
+                  </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="deletemodal${data[i]._id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Delete Item</h4>
+                </div>
+                <div class="modal-body">
+                  Are you sure want to delete this item (${data[i].name})?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="detailmodal${data[i]._id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Detail Item ${data[i].itemCode}</h4>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    Item Code : ${data[i].itemCode} <br>
+                    Name : ${data[i].name} <br>
+                    description: ${data[i].description} <br>
+                    Price : ${data[i].price} <br>
+                    Stock : ${data[i].stock}
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-success">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          `
+        }
+        $("#items").append(dataHTML);
+      }
+    })
+
+    function destroy(id) {
+      $.ajax({
+        type: "DELETE",
+        url: "http://localhost:3000/api/item/" + id,
+      })
+    }
+
+  })
   </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="javascripts/bs.js"></script>
+  <!-- <script src="javascripts/bs.js"></script> -->
 </html>
