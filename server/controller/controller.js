@@ -22,8 +22,10 @@ module.exports = {
             stock: req.body.stock
         }, (err, data) => {
             if (err) {
+                console.log(err);
                 res.json(err)
             } else {
+                console.log(data);
                 res.json(data)
             }
         })

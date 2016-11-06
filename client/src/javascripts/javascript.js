@@ -58,7 +58,11 @@ function loadTableItem() {
   <label for="stock_new">Stock</label>
   <input type="text" class="form-control" id="input_stock" placeholder="Stock" name='stock' required>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick='addItem()'>Submit</button>
+  <div id='alert' style='display:none'><div class="alert alert-danger" role="alert">
+  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</div>
+  </div>
 </form></div>`
             document.getElementById('itempanel').className = "active"
             document.getElementById('customerpanel').className = ""
@@ -70,6 +74,40 @@ function loadTableItem() {
         }
     };
     xhr.send();
+}
+function addItem() {
+    let item_code = document.getElementById('input_itemCode').value
+    let item_name = document.getElementById('input_name').value
+    let item_desc = document.getElementById('input_description').value
+    let item_price = document.getElementById('input_price').value
+    let item_stock = document.getElementById('input_stock').value
+
+    if (item_code != "" && item_name != "" && item_desc != "" && item_price != "" && item_stock != "") {
+        // var query = "status="+document.getElementById('exampleTextarea').value
+        var query = `itemCode=${item_code}&name=${item_name}&description=${item_desc}&price=${item_price}&stock=${item_stock}`
+        console.log(query);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/api/item', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.onreadystatechange = function() {
+            console.log(xhr);
+            if (xhr.status === 200) {
+                loadTableItem()
+                item_code = ""
+                item_name = ""
+                item_desc = ""
+                item_price = ""
+                item_stock = ""
+            } else {
+                alert('New Item Added Successfully');
+            }
+        };
+        xhr.send(query);
+    } else {
+        loadTableItem()
+        document.getElementById('alert').style = 'display:block'
+    }
+
 }
 
 function loadTableCustomer() {
