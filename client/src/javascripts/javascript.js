@@ -367,7 +367,13 @@ function loadTableTransaction() {
                 html += `<tr id="rowItem${data[i]._id}"><td>${data[i].memberId}</td>
                       <td>${data[i].transaction_date}</td>
                       <td>${data[i].total}</td>
-                      <td>${data[i].itemList}</td>
+                      <td>`
+                for (var j = 0; j < data[i].itemList.length; j++) {
+                    html += `Item Code: ${data[i].itemList[j].itemCode}
+                         Quantity: ${data[i].itemList[j].qty}
+                         Price: ${data[i].itemList[j].price}</br>`
+                }
+                html += `</td>
                       </tr>`
             }
             html += `</tbody></table>
