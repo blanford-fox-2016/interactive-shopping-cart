@@ -393,7 +393,7 @@ function loadTableTransaction() {
 </div>
 <div class="form-group">
 <label for="total_new">Total</label>
-<input type="text" class="form-control" id="input_total" placeholder="Item Name" name='total' required>
+<input type="text" class="form-control" id="input_total" placeholder="Total" name='total' required>
 </div>
 
 <div class="form-group">
@@ -411,6 +411,37 @@ function loadTableTransaction() {
             document.getElementById('transactionpanel').className = "active"
 
             document.getElementById('main-container').innerHTML = html
+            var selectCustomer = $('#selectCustomer')
+            $.ajax({
+                url: "http://localhost:3000/api/customer",
+                success: function(data) {
+
+                    $.extend({}, data)
+                    var customers = ''
+
+                    for (var i = 0; i < data.length; i++) {
+                        customers += `<option value="${data[i].memberId}">${data[i].memberId} - ${data[i].name}</option>`
+
+                    }
+                    selectCustomer.append(customers)
+                }
+            })
+            var selectItem = $('#selectItem')
+            $.ajax({
+                url: "http://localhost:3000/api/item",
+                success: function(data) {
+
+                    $.extend({}, data)
+                    var item = ''
+
+                    for (var i = 0; i < data.length; i++) {
+                        item += `<option value="${data[i].itemCode}">${data[i].name}</option>`
+                    }
+
+                    selectItem.append(item)
+                }
+            })
+
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
