@@ -3,15 +3,23 @@
 const mongoose = require('mongoose');
 let connection = mongoose.createConnection(process.env.DATABASE);
 let cartSchema = new mongoose.Schema({
-    memberId: [
-        {
-            type: String,
-            ref: 'Customer'
-        }
-    ],
-    total: Number,
-    transaction_date: Date,
-    itemList: Array
+    memberId: {
+        type: String,
+        ref: 'Customer',
+        required: true
+    },
+    total: {
+        type: Number,
+        required: true
+    },
+    transaction_date: {
+        type: Date,
+        required: true
+    },
+    itemList: {
+        type: Array,
+        required: true
+    }
 });
 
 let Cart = connection.model('Cart', cartSchema);

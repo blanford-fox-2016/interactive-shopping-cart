@@ -144,15 +144,19 @@ module.exports = {
         })
     },
     addCart: function(req, res, next) {
+        console.log('to controller');
+        console.log(req.body);
         cart.create({
             memberId: req.body.memberId,
             total: req.body.total,
             transaction_date: req.body.date,
-            itemList: req.body.itemCode
+            itemList: [`itemCode : ${req.body.itemCode}, qty : ${req.body.qty}, price : ${req.body.price}`]
         }, (err, data) => {
             if (err) {
+                console.log(err);
                 res.json(err)
             } else {
+                console.log(data);
                 res.json(data)
             }
         })

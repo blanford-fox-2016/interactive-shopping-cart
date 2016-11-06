@@ -389,7 +389,7 @@ function loadTableTransaction() {
 </div>
 <div class="form-group">
 <label for="date_new">Transaction Date</label>
-<input type="date" class="form-control" id="input_description" placeholder="Description" name='date' required>
+<input type="date" class="form-control" id="input_date" placeholder="Date" name='date' required>
 </div>
 <div class="form-group">
 <label for="total_new">Total</label>
@@ -398,9 +398,17 @@ function loadTableTransaction() {
 
 <div class="form-group">
 <label for="item_new">Item List</label>
-<select name="itemCode" class="form-control" id="selectItem">
+<select name="itemList" class="form-control" id="selectItem">
 
 </select>
+</div>
+<div class="form-group">
+<label for="qty_new">Quantity</label>
+<input type="text" class="form-control" id="input_qty" placeholder="Quantity" name='qty' required>
+</div>
+<div class="form-group">
+<label for="price_new">Price</label>
+<input type="text" class="form-control" id="input_price" placeholder="Price" name='price' required>
 </div>
 <div id='button-replace-item'>
 <button type="submit" class="btn btn-primary" onclick='addCart()'>Submit</button></div>
@@ -420,7 +428,7 @@ function loadTableTransaction() {
                     var customers = ''
 
                     for (var i = 0; i < data.length; i++) {
-                        customers += `<option value="${data[i].memberId}">${data[i].memberId} - ${data[i].name}</option>`
+                        customers += `<option value="${data[i].memberId}" name='memberId'>${data[i].memberId} - ${data[i].name}</option>`
 
                     }
                     selectCustomer.append(customers)
@@ -435,7 +443,7 @@ function loadTableTransaction() {
                     var item = ''
 
                     for (var i = 0; i < data.length; i++) {
-                        item += `<option value="${data[i].itemCode}">${data[i].name}</option>`
+                        item += `<option value="${data[i].itemCode}" name='itemCode'>${data[i].itemCode} - ${data[i].name} - Rp ${data[i].price}</option>`
                     }
 
                     selectItem.append(item)
@@ -450,27 +458,38 @@ function loadTableTransaction() {
 
 }
 
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
-//comment
+function addCart() {
+    var memberId = $("select[name='memberId']").val()
+    var total = $("input[name='total']").val()
+    var date = $("input[name='date']").val()
+    var codeItem = $("select[name='itemList']").val()
+    var qty = $("input[name='qty']").val()
+    var price = $("input[name='price']").val()
+    console.log(date);
+    if (memberId != "" && total != "" && date != "" && codeItem != "" && qty != "" & price != "") {
+
+        $.ajax({
+            url: "http://localhost:3000/api/cart",
+            method: "post",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                memberId: memberId,
+                total: total,
+                transaction_date: date,
+                itemList: [`itemCode : ${codeItem}, qty : ${qty}, price : ${price}`]
+            },
+            success: function(err, cart) {
+                if (err) {
+                    console.log(err);
+                    alert('Error')
+                } else {
+                    console.log(cart);
+                    alert('Cart added')
+                    loadTableTransaction()
+                }
+            }
+        })
+    } else {
+        alert('Please fill out All fields')
+    }
+}
