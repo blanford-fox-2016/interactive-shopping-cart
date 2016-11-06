@@ -1,14 +1,15 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     Item = require('./items'),
-    Customer = require('./customers')
+    Customer = require('./customers'),
+    moment = require('moment')
 
 const Cart = new Schema({
     transactionDate: Date,
     itemList: [{
         item: {
-        	type: Schema.Types.ObjectId,
-        	ref: 'Item'
+            type: Schema.Types.ObjectId,
+            ref: 'Item'
         },
         qty: Number
     }],
@@ -19,5 +20,11 @@ const Cart = new Schema({
 }, {
     timestamps: true
 })
+
+Cart.methods.toJSON = function() {
+    var obj = this.toObject()
+    obj.transactionDate = moment(obj.transactionDate).format('YYYY-MM-DD')
+    return obj
+};
 
 module.exports = mongoose.model('Cart', Cart)

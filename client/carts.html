@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Shopping Cart</title>
+    <link rel="stylesheet" href="./libraries/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://use.fontawesome.com/5b4025bff4.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">MELARAT</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="items.html">Items</a></li>
+                    <li><a href="customers.html">Customers</a></li>
+                    <li class="active"><a href="carts.html">Carts</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1" style="background: rgba(50,50,50,0.2); padding: 20px 20px 20px 20px">
+                <h1><span class="fa fa-shopping-cart"></span> CART LIST</h1>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3" style="background: rgba(0,0,0,0.1); padding: 20px 20px 5px 20px">
+                        <div class="form-group row">
+                            <form>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter name" id="example-text-input">
+                                </div>
+                                <br>
+                                <br>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter price" id="example-text-input">
+                                </div>
+                                <br>
+                                <br>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter stock" id="example-text-input">
+                                </div>
+                                <br>
+                                <br>
+                                <div class="col-md-12">
+                                    <button type="submit" onclick="addData(this)" class="btn btn-warning btn-block">Add Cart</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    
+                    <div id="cart-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./libraries/jquery-3.1.1.min.js"></script>
+<script src="./libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="./javascripts/script.carts.js"></script>
+
+</html>
