@@ -14,4 +14,7 @@ router.get('/customer/:id', controller.findEditCust)
 router.put('/customer/:id', controller.editCustomer)
 router.delete('/customer/:id', controller.removeCustomer)
 
+router.get('/cart', controller.viewCart)
+router.post('/cart', controller.addCart)
+
 module.exports = router;

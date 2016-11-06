@@ -343,4 +343,97 @@ function deleteCust(parameter) {
 
 }
 
+function loadTableTransaction() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:3000/api/cart');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText)
+            html = `<table class='table table-hover'>
+          <thead>
+          <tr>
+          <td>Member ID
+          </td>
+          <td>Transaction Date
+          </td>
+          <td>Total
+          </td>
+          <td>Item List
+          </td>
+          </tr>
+          </thead>
+          <tbody>`
+            for (var i = 0; i < data.length; i++) {
+                html += `<tr id="rowItem${data[i]._id}"><td>${data[i].memberId}</td>
+                      <td>${data[i].transaction_date}</td>
+                      <td>${data[i].total}</td>
+                      <td>${data[i].itemList}</td>
+                      </tr>`
+            }
+            html += `</tbody></table>
+          <div class="page-header">
+            <h2>Manage Cart</h2>
+          </div><div class='container'>
+          <form id='cartForm'>
+<div class="form-group">
+  <label for="memberId">Member ID</label>
+  <select name="memberId" class="form-control" id="selectCustomer">
+
+  </select>
+</div>
+<div class="form-group">
+<label for="date_new">Transaction Date</label>
+<input type="date" class="form-control" id="input_description" placeholder="Description" name='date' required>
+</div>
+<div class="form-group">
+<label for="total_new">Total</label>
+<input type="text" class="form-control" id="input_total" placeholder="Item Name" name='total' required>
+</div>
+
+<div class="form-group">
+<label for="item_new">Item List</label>
+<select name="itemCode" class="form-control" id="selectItem">
+
+</select>
+</div>
+<div id='button-replace-item'>
+<button type="submit" class="btn btn-primary" onclick='addCart()'>Submit</button></div>
+
+</form></div>`
+            document.getElementById('itempanel').className = ""
+            document.getElementById('customerpanel').className = ""
+            document.getElementById('transactionpanel').className = "active"
+
+            document.getElementById('main-container').innerHTML = html
+        } else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+
+}
+
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
+//comment
 //comment

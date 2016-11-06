@@ -133,5 +133,28 @@ module.exports = {
                 res.json(data)
             }
         })
+    },
+    viewCart: function(req, res, next) {
+        cart.find({}, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
+    },
+    addCart: function(req, res, next) {
+        cart.create({
+            memberId: req.body.memberId,
+            total: req.body.total,
+            transaction_date: req.body.date,
+            itemList: req.body.itemCode
+        }, (err, data) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(data)
+            }
+        })
     }
 }
