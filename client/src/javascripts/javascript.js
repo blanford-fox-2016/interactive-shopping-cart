@@ -57,8 +57,8 @@ function loadTableItem() {
   <div class="form-group">
   <label for="stock_new">Stock</label>
   <input type="text" class="form-control" id="input_stock" placeholder="Stock" name='stock' required>
-  </div>
-  <button type="submit" class="btn btn-primary" onclick='addItem()'>Submit</button>
+  </div><div id='button-replace-item'>
+  <button type="submit" class="btn btn-primary" onclick='addItem()'>Submit</button></div>
   <div id='alert' style='display:none'><div class="alert alert-danger" role="alert">
   <strong>Oh snap!</strong> Change a few things up and try submitting again.
 </div>
@@ -163,8 +163,8 @@ function loadTableCustomer() {
   <div class="form-group">
   <label for="phone_new">Phone Number</label>
   <input type="text" class="form-control" id="input_phone" placeholder="Phone" name='phone' required>
-  </div>
-  <button type="submit" class="btn btn-success" onclick=addCustomer()>Submit</button>
+  </div><div id='button-replace-cust'>
+  <button type="submit" class="btn btn-success" onclick=addCustomer()>Submit</button></div>
 </form></div>`
             document.getElementById('itempanel').className = ""
             document.getElementById('customerpanel').className = "active"
@@ -206,15 +206,17 @@ function addCustomer() {
 }
 
 function formEditItem(parameter) {
-    var targetItem = document.getElementById(parameter)
-    var itemId = targetItem.getAttribute('data-id')
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:3000/api/item/${itemId}`);
+    xhr.open('GET', `http://localhost:3000/api/item/${parameter}`);
     xhr.onload = function() {
         if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText)
-            html = '<h2>Form update</h2>'
-            console.log(data);
+            document.getElementById('input_itemCode').value = data[0].itemCode
+            document.getElementById('input_name').value = data[0].name
+            document.getElementById('input_description').value = data[0].description
+            document.getElementById('input_price').value = data[0].price
+            document.getElementById('input_stock').value = data[0].stock
+            $("#button-replace-item").html(`<button type='submit' class='btn btn-warning' onclick=putItem('${data[0]._id}')>Update</button>`)
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
@@ -222,3 +224,34 @@ function formEditItem(parameter) {
     xhr.send();
 
 }
+
+function putItem(parameter) {
+    let item_code = document.getElementById('input_itemCode').value
+    let item_name = document.getElementById('input_name').value
+    let item_desc = document.getElementById('input_description').value
+    let item_price = document.getElementById('input_price').value
+    let item_stock = document.getElementById('input_stock').value
+    if (item_code != "" && item_name != "" && item_desc != "" && item_price != "" && item_stock != "") {
+        $.ajax({
+            url: `http://localhost:3000/api/item/${parameter}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                id: parameter,
+                itemCode: item_code,
+                name: item_name,
+                description: item_desc,
+                price: item_price,
+                stock: item_stock
+            },
+            success: function(data) {
+                console.log(data)
+                alert('Success')
+            }
+        })
+    } else {
+        alert('Please Fill All Fields')
+    }
+}
+
+//comment
