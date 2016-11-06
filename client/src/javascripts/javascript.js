@@ -64,7 +64,7 @@ function loadTableItem() {
             document.getElementById('customerpanel').className = ""
             document.getElementById('transactionpanel').className = ""
 
-            document.getElementById('table-item').innerHTML = html
+            document.getElementById('main-container').innerHTML = html
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
@@ -78,17 +78,18 @@ function loadTableCustomer() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             var data = JSON.parse(xhr.responseText)
-            html = `<thead>
+            html = `<table class='table table-hover'>
+            <thead>
             <tr>
-            <td>Item Code
+            <td>Member ID
             </td>
             <td>Name
             </td>
-            <td>Description
+            <td>Address
             </td>
-            <td>Price
+            <td>ZIP
             </td>
-            <td>Stock
+            <td>Phone
             </td>
             <td>Action
             </td>
@@ -96,22 +97,48 @@ function loadTableCustomer() {
             </thead>
             <tbody>`
             for (var i = 0; i < data.length; i++) {
-                html += `<tr id="rowItem${data[i]._id}"><td>${data[i]._itemCode}</td>
+                html += `<tr id="rowCustomer${data[i]._id}"><td>${data[i].memberId}</td>
                         <td>${data[i].name}</td>
-                        <td>${data[i].description}</td>
-                        <td>${data[i].price}</td>
-                        <td>${data[i].stock}</td>
+                        <td>${data[i].address}</td>
+                        <td>${data[i].zip}</td>
+                        <td>${data[i].phone}</td>
                         <td><span>
-                            <button id="buttonEditItem${data[i]._id}" class="btn btn-warning" onclick="formEditItem('${data[i]._id}')">Edit</button>
-                            <button id="buttonDeleteItem${data[i]._id}" class="btn btn-danger" onclick="deleteItem('${data[i]._id}')">Delete</button>
+                            <button id="buttonEditCust${data[i]._id}" class="btn btn-warning" onclick="formEditCust('${data[i]._id}')">Edit</button>
+                            <button id="buttonDeleteCust${data[i]._id}" class="btn btn-danger" onclick="deleteCust('${data[i]._id}')">Delete</button>
                         </span></td></tr>`
             }
-            html += `</tbody>`
+            html += `</tbody></table>
+            <div class="page-header">
+              <h2>Add or Manage Customer</h2>
+            </div><div class='container'>
+            <form id='customerForm'>
+  <div class="form-group">
+    <label for="memberId_new">Member ID</label>
+    <input type="text" class="form-control" id="input_memberId" placeholder="Member ID" name='memberId'>
+  </div>
+  <div class="form-group">
+  <label for="name_new">Customer Name</label>
+  <input type="text" class="form-control" id="input_customerName" placeholder="Name" name='name'>
+  </div>
+  <div class="form-group">
+  <label for="address_new">Address</label>
+  <input type="text" class="form-control" id="input_address" placeholder="Address" name='address'>
+  </div>
+  <div class="form-group">
+  <label for="zip_new">ZIP</label>
+  <input type="text" class="form-control" id="input_zip" placeholder="ZIP" name='zip'>
+  </div>
+  <div class="form-group">
+  <label for="phone_new">Phone Number</label>
+  <input type="text" class="form-control" id="input_phone" placeholder="Phone" name='phone'>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form></div>`
             document.getElementById('itempanel').className = ""
             document.getElementById('customerpanel').className = "active"
             document.getElementById('transactionpanel').className = ""
 
-            document.getElementById('table-item').innerHTML = html
+            document.getElementById('main-container').innerHTML = html
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
