@@ -91,7 +91,7 @@
         dataType: "json",
         success: function appendnew(data) {
           var newHTML = '';
-          newHTML += `<div class="col-sm-6 col-md-4">
+          newHTML += `<div class="col-sm-6 col-md-4" id="item${data._id}">
             <div class="thumbnail">
               <div class="caption">
                 <h3>${data.name}</h3>
@@ -123,7 +123,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-danger">Delete</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteItem('${data._id}')">Delete</button>
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@
       success: function(data) {
         var dataHTML = '';
         for (var i = 0; i < data.length; i++) {
-          dataHTML += `<div class="col-sm-6 col-md-4">
+          dataHTML += `<div class="col-sm-6 col-md-4" id="item${data[i]._id}">
             <div class="thumbnail">
               <div class="caption">
                 <h3>${data[i].name}</h3>
@@ -203,7 +203,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-danger">Delete</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteItem('${data[i]._id}')">Delete</button>
                 </div>
               </div>
             </div>
@@ -239,14 +239,23 @@
       }
     })
 
-    function destroy(id) {
-      $.ajax({
-        type: "DELETE",
-        url: "http://localhost:3000/api/item/" + id,
-      })
-    }
-
   })
+
+  function deleteItem(id) {
+    $.ajax({
+      url         : 'http://localhost:3000/api/item/'+id,
+      type        : 'DELETE',
+      dataType    : 'json',
+      contentType : 'application/x-www-form-urlencoded',
+      success     : function() {
+        $(`#item${id}`).remove();
+        $(`#detailmodal${id}`).remove();
+        $(`#deletemodal${id}`).remove();
+        $(`.modal-backdrop.fade.in`).remove();
+      }
+    })
+
+  }
   </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <!-- <script src="javascripts/bs.js"></script> -->
