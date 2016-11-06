@@ -1,9 +1,3 @@
-.panel-success {
-  border-color: #e602ae
-}
-
-.panel-success>.panel-heading {
-  color: #fffc3a;
-  background-color : #f31ef5;
-  border-color: #ff00fb;
+.btn-primary {
+  margin-bottom: 30px;
 }
