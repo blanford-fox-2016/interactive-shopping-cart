@@ -325,7 +325,7 @@ function putCust(parameter) {
 }
 
 function deleteCust(parameter) {
-    var del = confirm("Are you sure want to delete this item?")
+    var del = confirm("Are you sure want to delete this customer?")
     if (del) {
         $.ajax({
             url: `http://localhost:3000/api/customer/${parameter}`,
