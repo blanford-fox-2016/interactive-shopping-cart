@@ -93,19 +93,13 @@ function addItem() {
             console.log(xhr);
             if (xhr.status === 200) {
                 loadTableItem()
-                item_code = ""
-                item_name = ""
-                item_desc = ""
-                item_price = ""
-                item_stock = ""
             } else {
                 alert('New Item Added Successfully');
             }
         };
         xhr.send(query);
     } else {
-        loadTableItem()
-        document.getElementById('alert').style = 'display:block'
+        alert('Please Fill All Fields')
     }
 
 }
@@ -170,7 +164,7 @@ function loadTableCustomer() {
   <label for="phone_new">Phone Number</label>
   <input type="text" class="form-control" id="input_phone" placeholder="Phone" name='phone' required>
   </div>
-  <button type="submit" class="btn btn-success">Submit</button>
+  <button type="submit" class="btn btn-success" onclick=addCustomer()>Submit</button>
 </form></div>`
             document.getElementById('itempanel').className = ""
             document.getElementById('customerpanel').className = "active"
@@ -182,6 +176,33 @@ function loadTableCustomer() {
         }
     };
     xhr.send();
+}
+function addCustomer() {
+    let cust_id = document.getElementById('input_memberId').value
+    let cust_name = document.getElementById('input_customerName').value
+    let cust_address = document.getElementById('input_address').value
+    let cust_zip = document.getElementById('input_zip').value
+    let cust_phone = document.getElementById('input_phone').value
+
+    if (cust_id != "" && cust_name != "" && cust_address != "" && cust_zip != "" && cust_phone != "") {
+        var query = `memberId=${cust_id}&name=${cust_name}&address=${cust_address}&zip=${cust_zip}&phone=${cust_phone}`
+        console.log(query);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/api/customer', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.onreadystatechange = function() {
+            console.log(xhr);
+            if (xhr.status === 200) {
+                loadTableCustomer()
+            } else {
+                alert('New Customer Added Successfully');
+            }
+        };
+        xhr.send(query);
+    } else {
+        alert('Please Fill All Fields')
+    }
+
 }
 
 function formEditItem(parameter) {
