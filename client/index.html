@@ -251,11 +251,11 @@
     var desc = document.getElementById('detItemDesc'+id).innerHTML;
     var price = document.getElementById('detItemPrice'+id).innerHTML;
     var stock = document.getElementById('detItemStock'+id).innerHTML;
-    document.getElementById('detItemCode'+id).innerHTML = `<input class="form-control" id="ItemCode${id}" type="text" value=${code}>`;
-    document.getElementById('detItemName'+id).innerHTML = `<input class="form-control" id="ItemName${id}" type="text" value=${name}>`;
+    document.getElementById('detItemCode'+id).innerHTML = `<input class="form-control" id="ItemCode${id}" type="text" value="${code}">`;
+    document.getElementById('detItemName'+id).innerHTML = `<input class="form-control" id="ItemName${id}" type="text" value="${name}">`;
     document.getElementById('detItemDesc'+id).innerHTML = `<textarea class="form-control" id="ItemDesc${id}">${desc}</textarea>`;
-    document.getElementById('detItemPrice'+id).innerHTML = `<input class="form-control" id="ItemPrice${id}" type="number" value=${price}>`;
-    document.getElementById('detItemStock'+id).innerHTML = `<input class="form-control" id="ItemStock${id}" type="number" value=${stock}>`;
+    document.getElementById('detItemPrice'+id).innerHTML = `<input class="form-control" id="ItemPrice${id}" type="number" value="${price}">`;
+    document.getElementById('detItemStock'+id).innerHTML = `<input class="form-control" id="ItemStock${id}" type="number" value="${stock}">`;
     document.getElementById('editbtn'+id).innerHTML = `<button type="button" class="btn btn-success" onclick=updateItem('${id}') data-dismiss="modal">Save</button>`;
   }
 
