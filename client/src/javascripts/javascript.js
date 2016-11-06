@@ -40,23 +40,23 @@ function loadTableItem() {
             <form id='itemForm'>
   <div class="form-group">
     <label for="itemCode_new">Item Code</label>
-    <input type="text" class="form-control" id="input_itemCode" placeholder="Item Code" name='itemCode'>
+    <input type="text" class="form-control" id="input_itemCode" placeholder="Item Code" name='itemCode' required>
   </div>
   <div class="form-group">
   <label for="name_new">Item Name</label>
-  <input type="text" class="form-control" id="input_name" placeholder="Item Name" name='name'>
+  <input type="text" class="form-control" id="input_name" placeholder="Item Name" name='name' required>
   </div>
   <div class="form-group">
   <label for="description_new">Description</label>
-  <input type="text" class="form-control" id="input_description" placeholder="Description" name='description'>
+  <input type="text" class="form-control" id="input_description" placeholder="Description" name='description' required>
   </div>
   <div class="form-group">
   <label for="price_new">Price</label>
-  <input type="text" class="form-control" id="input_price" placeholder="Price" name='price'>
+  <input type="text" class="form-control" id="input_price" placeholder="Price" name='price' required>
   </div>
   <div class="form-group">
   <label for="stock_new">Stock</label>
-  <input type="text" class="form-control" id="input_stock" placeholder="Stock" name='stock'>
+  <input type="text" class="form-control" id="input_stock" placeholder="Stock" name='stock' required>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form></div>`
@@ -114,23 +114,23 @@ function loadTableCustomer() {
             <form id='customerForm'>
   <div class="form-group">
     <label for="memberId_new">Member ID</label>
-    <input type="text" class="form-control" id="input_memberId" placeholder="Member ID" name='memberId'>
+    <input type="text" class="form-control" id="input_memberId" placeholder="Member ID" name='memberId' required>
   </div>
   <div class="form-group">
   <label for="name_new">Customer Name</label>
-  <input type="text" class="form-control" id="input_customerName" placeholder="Name" name='name'>
+  <input type="text" class="form-control" id="input_customerName" placeholder="Name" name='name' required>
   </div>
   <div class="form-group">
   <label for="address_new">Address</label>
-  <input type="text" class="form-control" id="input_address" placeholder="Address" name='address'>
+  <input type="text" class="form-control" id="input_address" placeholder="Address" name='address' required>
   </div>
   <div class="form-group">
   <label for="zip_new">ZIP</label>
-  <input type="text" class="form-control" id="input_zip" placeholder="ZIP" name='zip'>
+  <input type="text" class="form-control" id="input_zip" placeholder="ZIP" name='zip' required>
   </div>
   <div class="form-group">
   <label for="phone_new">Phone Number</label>
-  <input type="text" class="form-control" id="input_phone" placeholder="Phone" name='phone'>
+  <input type="text" class="form-control" id="input_phone" placeholder="Phone" name='phone' required>
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form></div>`
