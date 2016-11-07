@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .jumbotron.text-center
+    h1 Interactive Shopping Cart
+  .container
+    #wrapper
+      .container
+        h2 Item List
+        p This table is populated using ajax
+        #itemList
+          .container
+            table.table.table-striped
+                thead
+                    th itemCode
+                    th name
+                    th description
+                    th price
+                    th stock
+                    th update
+                    th delete
+                tbody
+          .container
+            h2 Add Item
+            #addItem
+                fieldset.form-group
+                  .form-group
+                    input#inputitemCode.form-control(type='text', placeholder='itemCode')
+                  .form-group
+                    input#inputname.form-control(type='text', placeholder='name')
+                  .form-group
+                    input#inputdescription.form-control(type='text', placeholder='description')
+                  .form-group
+                    input#inputprice.form-control(type='text', placeholder='price')
+                  .form-group
+                    input#inputstock.form-control(type='text', placeholder='stock')
+                  .form-group
+                    button.btn.btn-primary#btnAddItem Add Memo
