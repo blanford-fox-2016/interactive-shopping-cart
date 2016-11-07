@@ -75,6 +75,7 @@ function loadTableItem() {
     };
     xhr.send();
 }
+
 function addItem() {
     let item_code = document.getElementById('input_itemCode').value
     let item_name = document.getElementById('input_name').value
@@ -245,6 +246,7 @@ function loadTableCustomer() {
     };
     xhr.send();
 }
+
 function addCustomer() {
     let cust_id = document.getElementById('input_memberId').value
     let cust_name = document.getElementById('input_customerName').value
@@ -388,10 +390,6 @@ function loadTableTransaction() {
   </select>
 </div>
 <div class="form-group">
-<label for="date_new">Transaction Date</label>
-<input type="date" class="form-control" id="input_date" placeholder="Date" name='date' required>
-</div>
-<div class="form-group">
 <label for="total_new">Total</label>
 <input type="text" class="form-control" id="input_total" placeholder="Total" name='total' required>
 </div>
@@ -461,13 +459,12 @@ function loadTableTransaction() {
 function addCart() {
     var memberId = $("select[name='memberId']").val()
     var total = $("input[name='total']").val()
-    var date = $("input[name='date']").val()
     var codeItem = $("select[name='itemList']").val()
     var qty = $("input[name='qty']").val()
     var price = $("input[name='price']").val()
-    console.log(date);
-    if (memberId != "" && total != "" && date != "" && codeItem != "" && qty != "" & price != "") {
-
+    console.log('code item');
+    console.log(codeItem);
+    if (memberId != "" && total != "" && codeItem != "" && qty != "" & price != "") {
         $.ajax({
             url: "http://localhost:3000/api/cart",
             method: "post",
@@ -475,18 +472,13 @@ function addCart() {
             data: {
                 memberId: memberId,
                 total: total,
-                transaction_date: date,
-                itemList: [`itemCode : ${codeItem}, qty : ${qty}, price : ${price}`]
+                itemCode: `${codeItem}`,
+                qty: `${qty}`,
+                price: `${price}`
             },
-            success: function(err, cart) {
-                if (err) {
-                    console.log(err);
-                    alert('Error')
-                } else {
-                    console.log(cart);
-                    alert('Cart added')
-                    loadTableTransaction()
-                }
+            success: function(cart) {
+                alert('Cart added')
+                loadTableTransaction()
             }
         })
     } else {

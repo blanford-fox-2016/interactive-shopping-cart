@@ -150,7 +150,7 @@ module.exports = {
             memberId: req.body.memberId,
             total: req.body.total,
             transaction_date: req.body.date,
-            itemList: [`itemCode : ${req.body.itemCode}, qty : ${req.body.qty}, price : ${req.body.price}`]
+            itemList: [{ itemCode: `${req.body.itemCode}`, qty: `${req.body.qty}`, price: `${req.body.price}` }]
         }, (err, data) => {
             if (err) {
                 console.log(err);

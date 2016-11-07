@@ -14,7 +14,7 @@ let cartSchema = new mongoose.Schema({
     },
     transaction_date: {
         type: Date,
-        required: true
+        default: Date.now
     },
     itemList: {
         type: Array,
