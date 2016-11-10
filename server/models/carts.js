@@ -20,7 +20,7 @@ const Cart = new Schema({
 }, {
     timestamps: true
 })
-
+//
 Cart.methods.toJSON = function() {
     var obj = this.toObject()
     obj.transactionDate = moment(obj.transactionDate).format('YYYY-MM-DD')

@@ -18,7 +18,8 @@ module.exports = {
   postData: (req, res) => {
     const customer = {
       name: req.body.name,
-      address: req.body.address
+      address: req.body.address,
+      image: req.body.image
     }
     Customer.create(customer, (err, data) => {
       if (err) res.status(400).json({ 'error': `Error: ${err}` })
@@ -55,7 +56,8 @@ module.exports = {
       _id: req.params.id
     }, {
       name: req.body.name,
-      address: req.body.address
+      address: req.body.address,
+      image: req.body.image
     }, {
       new: true
       //use below to add new if data doesn't exist

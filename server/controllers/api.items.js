@@ -19,7 +19,8 @@ module.exports = {
     const item = {
       name: req.body.name,
       price: req.body.price,
-      stock: req.body.stock
+      stock: req.body.stock,
+      image: req.body.image
     }
     Item.create(item, (err, data) => {
       if (err) res.status(400).json({ 'error': `Error: ${err}` })
@@ -57,7 +58,8 @@ module.exports = {
     }, {
       name: req.body.name,
       price: req.body.price,
-      stock: req.body.stock
+      stock: req.body.stock,
+      image: req.body.image
     }, {
       new: true
       //use below to add new if data doesn't exist

@@ -4,7 +4,8 @@ const mongoose = require('mongoose'),
 const Item = new Schema({
     name: String,
     price: Number,
-    stock: Number
+    stock: Number,
+    image: String
 }, {
     timestamps: true
 })

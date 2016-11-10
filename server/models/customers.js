@@ -3,7 +3,8 @@ const mongoose = require('mongoose'),
 
 const Customer = new Schema({
     name: String,
-    address: String
+    address: String,
+    image: String
 }, {
     timestamps: true
 })
