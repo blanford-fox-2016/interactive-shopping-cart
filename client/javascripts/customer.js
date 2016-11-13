@@ -189,6 +189,67 @@ function editCustomer(id) {
   document.getElementById('editbtn'+id).innerHTML = `<button type="button" class="btn btn-success" onclick=updateCustomer('${id}') data-dismiss="modal">Save</button>`;
 }
 
+function updateCustomer(id) {
+  $.ajax({
+    url: "http://localhost:3000/api/customer/"+id,
+    method: 'PUT',
+    contentType: 'application/x-www-form-urlencoded',
+    data : {
+      _id : id,
+      name: $('#customerName'+ id).val(),
+      memberId: $('#customerMemberID'+ id).val(),
+      address: $('#customerAddress'+ id).val(),
+      zip: $('#customerZip'+ id).val(),
+      phone: $('#customerPhone'+ id).val()
+    },
+    success: function(editedData) {
+      console.log(editedData);
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/api/customer/"+id,
+        dataType: "json",
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(data) {
+          console.log(data);
+          var newDataItem = `<div class="col-sm-6 col-md-4" id="customer${data._id}">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>${data.memberId}</h3>
+                <p>${data.name}</p>
+                <p class="text-center">
+                  <button type="button" class="btn btn-primary" role="button"  data-toggle="modal" data-target="#detailmodal${data._id}">
+                    <i class="glyphicon glyphicon-eye-open"></i> Detail
+                  </button>
+                  <button type="button" class="btn btn-danger" role="button"  data-toggle="modal" data-target="#deletemodal${data._id}">
+                    <i class="glyphicon glyphicon-trash"></i> Delete
+                  </button>
+              </div>
+            </div>
+          </div>`;
+
+          var newDetailItem = `<form class = col-md-12 id="detailCustomer${data._id}">
+            <div class="form-group">
+              <label class="control-label" for="detItemCode">ItemCode : </label>
+              <div id="detCustomerMemberID${data._id}">${data.memberId}</div>
+              <label class="control-label" for="detCustomerName">Name : </label>
+              <div id="detCustomerName${data._id}">${data.name}</div>
+              <label class="control-label" for="detCustomerAddress">address : </label>
+              <div id="detCustomerAddress${data._id}">${data.address}</div>
+              <label class="control-label" for="detCustomerPhone">Phone : </label>
+              <div id="detCustomerPhone${data._id}">${data.phone}</div>
+              <label class="control-label" for="detCustomerZIP">ZIP : </label>
+              <div id="detCustomerZIP${data._id}">${data.zip}</div>
+            </div>
+          </form>`;
+
+          $(`#customer${id}`).replaceWith(newDataItem);
+          $(`#detailCustomer${id}`).replaceWith(newDetailItem);
+        }
+      })
+    }
+  })
+}
+
 function deleteCustomer(id) {
   $.ajax({
     url         : 'http://localhost:3000/api/customer/'+id,
