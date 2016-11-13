@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Tamvan Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Shopping-Cart</a>
+        </div>
+        <div id="bs-example-navbar-collapse-2" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Items</a></li>
+            <li><a href="/customers.html">Customer</a></li>
+            <li><a href="/cart">Cart</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- NAVBAR -->
+
+    <div class="container">
+      <div class="row">
+        <h3 class="pull-left">Item List</h3>
+        <h3 class="pull-right">
+          <!-- <button id="reload" name="reload" class="btn btn-default" type="button" data-toggle="collapse" data-target="#reloadItem" aria-expanded="false" aria-controls="reloadItem">
+            <i class="glyphicon glyphicon-refresh"></i> Reload Item
+          </button> -->
+          <button name="add" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <i class="glyphicon glyphicon-plus"></i> Add New Item
+          </button>
+        </h3>
+        <div class="clearfix"></div>
+      </div>
+      <div class="collapse" id="collapseExample">
+        <form class="col-lg-12" id="inputItem">
+          <div class="form-group">
+            <label class="control-label" for="ItemCode">Item Code</label>
+            <input class="form-control" id="ItemCode" type="text" placeholder="Enter the item code">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="ItemName">Name</label>
+            <input class="form-control" id="ItemName" type="text" placeholder="Enter the item name">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="ItemPrice">Price</label>
+            <input class="form-control" id="ItemPrice" type="number" placeholder="Enter the item price">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="ItemStock">Stock</label>
+            <input class="form-control" id="ItemStock" type="number" placeholder="Enter the item stock">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="ItemDescription">Description</label>
+            <textarea class="form-control" id="ItemDescription" placeholder="Enter the item description"></textarea>
+          </div>
+          <div class="form-group">
+            <button id="submitItem" type="button" name="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+      <!-- All items data belong here -->
+      <div class="row" id="items">
+        <!-- All Items data belongs here -->
+      </div>
+      <!-- ITEM LIST -->
+    </div>
+
+  </body>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="javascripts/item.js" charset="utf-8"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- <script src="javascripts/bs.js"></script> -->
+</html>
