@@ -12,7 +12,7 @@ function getAllDatas() {
                         <h4>' + datas[i].transactionDate + '</h4>\
                         <p>' + datas[i].customer.name + '</p>\
                         <div class="cart-items" data-id="' + datas[i]._id + '"></div>\
-                        <button data-id="' + datas[i]._id + '" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal" onclick="showEditData(this)"><span class="fa fa-pencil"></span></button>\
+                        <!-- <button data-id="' + datas[i]._id + '" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal" onclick="showEditData(this)"><span class="fa fa-pencil"></span></button> -->\
                         <button data-id="' + datas[i]._id + '" class="btn btn-sm btn-default" onclick="deleteData(this,event)"><span class="fa fa-trash"></span></button>\
                     </div>\
                 ')
