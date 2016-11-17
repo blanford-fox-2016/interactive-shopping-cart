@@ -28,22 +28,41 @@ module.exports = {
                     transactionDate: req.body.transactionDate,
                     customer: customer._id
                 })
-                for (let j in req.body.item_id) {
+                console.log('masuk di customer')
+                if (req.body.item_id.length > 1 && req.body.qty.length > 1) {
+                    for (let j in req.body.item_id) {
+                        Item
+                            .findOne({ _id: req.body.item_id[j] })
+                            .exec((err, item) => {
+                                cart.itemList.push({
+                                    item: item._id,
+                                    qty: req.body.qty[j]
+                                })
+                                if (j == req.body.item_id.length - 1) {
+                                    cart.save((err, data) => {
+                                        if (err) res.status(400).json({ 'error': `Error: ${err}` })
+                                        res.status(200).json({ 'message': 'Add data successful', data })
+                                    })
+                                }
+                            })
+                    }
+                } else {
+                    console.log('masuk di item')
                     Item
-                        .findOne({ _id: req.body.item_id[j] })
+                        .findOne({ _id: req.body.item_id })
                         .exec((err, item) => {
                             cart.itemList.push({
                                 item: item._id,
-                                qty: req.body.qty[j]
+                                qty: req.body.qty
                             })
-                            if (j == req.body.item_id.length - 1) {
-                                cart.save((err, data) => {
-                                    if (err) res.status(400).json({ 'error': `Error: ${err}` })
-                                    res.status(200).json({ 'message': 'Add data successful', data })
-                                })
-                            }
+                            cart.save((err, data) => {
+                                if (err) res.status(400).json({ 'error': `Error: ${err}` })
+                                res.status(200).json({ 'message': 'Add data successful', data })
+                            })
+
                         })
                 }
+
             })
     },
 
