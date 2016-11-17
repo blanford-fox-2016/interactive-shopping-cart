@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Shopping Cart</title>
+    <!-- ALL CSS -->
+    <link rel="stylesheet" href="./libraries/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Fontawesome -->
+    <script src="https://use.fontawesome.com/5b4025bff4.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">MELARAT</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="items.html">Items</a></li>
+                    <li><a href="customers.html">Customers</a></li>
+                    <li class="active"><a href="carts.html">Carts</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div id="main-content">
+        <div class="container">
+            <!-- Alert -->
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2" id="alert-message">
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content" style="background: rgba(255,255,255,0.9); padding: 10px 10px 5px 10px">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title" style="color:#5E5F5B;"><span class="fa fa-pencil"></span> Edit Cart</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <form id="edit-cart-form">
+                                    <div class="col-md-12" style="margin-bottom: 5px">
+                                        <input type="text" id="date2" class="form-control" name="transaction-date" placeholder="Enter transaction date">
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 5px">
+                                        <select class="form-control" name="customer-id" id="select-user">
+                                            <option value="" disabled selected>Select customer</option>
+                                            <!-- Customers list goes here -->
+                                        </select>
+                                    </div>
+                                    <div class="well well-sm col-md-10 col-md-offset-1" style="background-color: transparent; border: 2px solid #C1C1C1;">
+                                        <div class="col-md-12" style="margin-bottom: 5px;">
+                                            <button class="btn btn-default btn-block" onclick="addItemFormOnEdit(event)">Purchase an item</button>
+                                        </div>
+                                        <div id="item-input-forms-edit">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-warning btn-block">Edit Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Cart list -->
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1" style="background: rgba(50,50,50,0.2); padding: 20px 20px 20px 20px">
+                    <h1><span class="fa fa-shopping-cart"></span> CART LIST</h1>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style="background: rgba(0,0,0,0.1); padding: 20px 20px 5px 20px">
+                            <div class="form-group row">
+                                <form id="add-cart-form">
+                                    <div class="col-md-12" style="margin-bottom: 5px">
+                                        <input type="text" id="date" class="form-control" name="transaction-date" placeholder="Enter transaction date">
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 5px">
+                                        <select class="form-control" name="customer-id" id="select-user">
+                                            <option value="" disabled selected>Select customer</option>
+                                            <!-- Customers list goes here -->
+                                        </select>
+                                    </div>
+                                    <div class="well well-sm col-md-10 col-md-offset-1" style="background-color: transparent; border: 2px solid #2762A4;">
+                                        <div class="col-md-12" style="margin-bottom: 5px;">
+                                            <button class="btn btn-primary btn-block" onclick="addItemForm(event)">Purchase an item</button>
+                                        </div>
+                                        <div id="item-input-forms-add">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-info btn-block"><span class="fa fa-plus"></span> Add Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cart-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./libraries/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="./libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="./javascripts/script.carts.js"></script>
+
+</html>
